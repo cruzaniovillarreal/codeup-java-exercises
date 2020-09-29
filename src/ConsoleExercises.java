@@ -34,29 +34,29 @@ public class ConsoleExercises {
 //        System.out.printf("Your sentence was: \n%s", userSentence);
 
         Scanner lwInput = new Scanner(System.in);
+        System.out.print("\nEnter Length, Width, and Height:");
         lwInput.useDelimiter("#");
-        System.out.print("Enter Length, Width, and Height:");
 
 //      Using .next Methods
 //      nextFloats/Ints
-        float userLength = lwInput.nextFloat();
-        float userWidth = lwInput.nextFloat();
-        float userHeight = lwInput.nextFloat();
+//        float userLength = lwInput.nextFloat();
+//        float userWidth = lwInput.nextFloat();
+//        float userHeight = lwInput.nextFloat();
 
 //        parseInt/float next
-//        String userLength = lwInput.next();
-//        String userWidth = lwInput.next();
-//        String userHeight = lwInput.next();
-//        int userLength = parseInt(userLength);
-//        int userLength = parseInt(userLength);
-//        int userLength = parseInt(userLength);
+//        String stringLength = lwInput.next();
+//        String stringWidth = lwInput.next();
+//        String stringHeight = lwInput.next();
+//        int userLength = parseInt(stringLength);
+//        int userWidth = parseInt(stringWidth);
+//        int userHeight = parseInt(stringHeight);
 
 //        Using array split method
-//        String wholeLine = lwInput.nextLine();
-//        String[] vwhArray = wholeLine.split(" ");
-//        float userLength = parseFloat(vwhArray[0]);
-//        float userWidth = parseFloat(vwhArray[1]);
-//        float userHeight = parseFloat(vwhArray[2]);
+        String wholeLine = lwInput.nextLine();
+        String[] vwhArray = wholeLine.split("#");
+        float userLength = parseFloat(vwhArray[0]);
+        float userWidth = parseFloat(vwhArray[1]);
+        float userHeight = parseFloat(vwhArray[2]);
 
         float perimeter = (userWidth*2) + (userLength*2);
         float area = (userWidth * userLength);
