@@ -3,6 +3,18 @@ import java.util.Scanner;
 public class ControlFlowExercises {
     public static void main(String[] args) {
 
+//        int y = 5;
+//        while (y <= 15) {
+//            System.out.print(y + " ");
+//            y++;
+//        }
+
+//        double j = 2;
+//        do {
+//            System.out.print("\n" + j);
+//            j = Math.pow(j, 2);
+//        } while (j < 1000000);
+
 //        for (int i=1; i<100; i++) {
 //            if (i%3==0 & i%5==0) {
 //                System.out.print("\nFizzBuzz");
