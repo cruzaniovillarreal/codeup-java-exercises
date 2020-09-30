@@ -27,28 +27,55 @@ public class ControlFlowExercises {
 //            }
 //        }
 
-        Scanner newNumber = new Scanner(System.in);
-        System.out.print("Enter an integer: ");
-        int userNumber = newNumber.nextInt();
-        System.out.print(userNumber);
-
-        System.out.print("\n\nHere is your table!");
-
-        String leftAlignFormat = "| %-6d | %-6d | %-6d |%n";
-        System.out.format("\n+--------+---------+-------+%n");
-        System.out.format("| Number | Squared | Cubed |%n");
-        System.out.format("+--------+---------+-------+%n");
-        for (int i = 1; i <= userNumber; i++) {
-            Scanner toContinue = new Scanner(System.in);
-            System.out.print("Would you like to continue? [Y/N]");
-            String userAnswer = toContinue.next();
-            if (userAnswer.equals("y")) {
+        String userAnswer = "";
+        do {
+            Scanner newNumber = new Scanner(System.in);
+            System.out.print("Enter an integer: ");
+            int userNumber = newNumber.nextInt();
+            System.out.print("\nHere is your table!");
+            String leftAlignFormat = "| %-6d | %-6d | %-6d |%n";
+            System.out.format("\n+--------+---------+-------+%n");
+            System.out.format("| Number | Squared | Cubed |%n");
+            System.out.format("+--------+---------+-------+%n");
+            for (int i = 1; i <= userNumber; i++) {
                 System.out.format(leftAlignFormat,i, i*i, i*i*i);
-            } else {
-                break;
             }
-        }
-        System.out.format("+--------+---------+-------+%n");
+            Scanner toContinue = new Scanner(System.in);
+            System.out.print("\nWould you like to continue? [Y/N]");
+            userAnswer += toContinue.next();
+        } while (userAnswer.equalsIgnoreCase("y"));
 
+//        System.out.format("+--------+---------+-------+%n");
+//        Scanner scanner = new Scanner(System.in);
+//        String choice = "y";
+//        do
+//        {
+//            // Get input from the user
+//            System.out.print("Enter an integer: ");
+//            int integer = scanner.nextInt();
+//            // Create a header
+//            String header = "Number | " + "Squared | " + "Cubed   " + "\n"
+//                    +   "------ | " + "------- | " + "-----   " + "\n";
+//            System.out.format("%-15s", header);
+//            int square = 0;
+//            int cube = 0;
+//            String row = "";
+//            for (int i = 1; i <= integer; i++)
+//            {
+//                square = i * i;
+//                cube = i * i * i;
+//                if (i < 4) {
+//                    row = i + "      | " + square + "       | " + cube;
+//                } else {
+//                    row = i + "      | " + square + "      | " + cube;
+//                }
+//                System.out.format("%-15s\n", row);
+//            }
+//            // See if the user wants to continue
+//            System.out.print("Continue? (y/n): ");
+//            choice = scanner.next();
+//            System.out.println();
+//        }
+//        while (!choice.equalsIgnoreCase("n"));
     }
 }
