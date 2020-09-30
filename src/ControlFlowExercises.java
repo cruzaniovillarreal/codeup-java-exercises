@@ -1,5 +1,6 @@
 import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.Scanner;
+
 public class ControlFlowExercises {
     public static void main(String[] args) {
 
@@ -27,55 +28,70 @@ public class ControlFlowExercises {
 //            }
 //        }
 
-        String userAnswer = "";
+//        String userAnswer = "";
+//        do {
+//            userAnswer = "";
+//            Scanner newNumber = new Scanner(System.in);
+//            System.out.print("Enter an integer: ");
+//            int userNumber = newNumber.nextInt();
+//            System.out.print("\nHere is your table!");
+//            String leftAlignFormat = "| %-6d | %-6d | %-6d |%n";
+//            System.out.format("\n+--------+---------+-------+%n");
+//            System.out.format("| Number | Squared | Cubed |%n");
+//            System.out.format("+--------+---------+-------+%n");
+//            for (int i = 1; i <= userNumber; i++) {
+//                System.out.format(leftAlignFormat, i, i * i, i * i * i);
+//            }
+//            Scanner toContinue = new Scanner(System.in);
+//            System.out.print("\nWould you like to continue? [Y/N]");
+//            userAnswer += toContinue.next();
+//        } while (userAnswer.equalsIgnoreCase("y"));
+
+        String answer = "";
         do {
-            Scanner newNumber = new Scanner(System.in);
-            System.out.print("Enter an integer: ");
-            int userNumber = newNumber.nextInt();
-            System.out.print("\nHere is your table!");
-            String leftAlignFormat = "| %-6d | %-6d | %-6d |%n";
-            System.out.format("\n+--------+---------+-------+%n");
-            System.out.format("| Number | Squared | Cubed |%n");
-            System.out.format("+--------+---------+-------+%n");
-            for (int i = 1; i <= userNumber; i++) {
-                System.out.format(leftAlignFormat,i, i*i, i*i*i);
+            answer = "";
+            Scanner newGrade = new Scanner(System.in);
+            System.out.print("Enter a grade number (0-100) to receive letter grade: ");
+            int userGrade = newGrade.nextInt();
+            if (userGrade >= 88) {
+                if (userGrade >= 99) {
+                    System.out.print("A+");
+                } else if (userGrade >= 93) {
+                    System.out.print("A");
+                } else {
+                    System.out.print("A-");
+                }
+            } else if (userGrade >= 80) {
+                if (userGrade >= 86) {
+                    System.out.print("B+");
+                } else if (userGrade >= 83) {
+                    System.out.print("B");
+                } else {
+                    System.out.print("B-");
+                }
+            } else if (userGrade >= 67) {
+                if (userGrade >= 78) {
+                    System.out.print("C+");
+                } else if (userGrade >= 72) {
+                    System.out.print("C");
+                } else {
+                    System.out.print("C-");
+                }
+            } else if (userGrade >= 60) {
+                if (userGrade >= 65) {
+                    System.out.print("D+");
+                } else if (userGrade >= 63) {
+                    System.out.print("D");
+                } else {
+                    System.out.print("D-");
+                }
+            } else {
+                System.out.print("F");
             }
             Scanner toContinue = new Scanner(System.in);
             System.out.print("\nWould you like to continue? [Y/N]");
-            userAnswer += toContinue.next();
-        } while (userAnswer.equalsIgnoreCase("y"));
+            answer += toContinue.next();
+        } while (answer.equalsIgnoreCase("y"));
 
-//        System.out.format("+--------+---------+-------+%n");
-//        Scanner scanner = new Scanner(System.in);
-//        String choice = "y";
-//        do
-//        {
-//            // Get input from the user
-//            System.out.print("Enter an integer: ");
-//            int integer = scanner.nextInt();
-//            // Create a header
-//            String header = "Number | " + "Squared | " + "Cubed   " + "\n"
-//                    +   "------ | " + "------- | " + "-----   " + "\n";
-//            System.out.format("%-15s", header);
-//            int square = 0;
-//            int cube = 0;
-//            String row = "";
-//            for (int i = 1; i <= integer; i++)
-//            {
-//                square = i * i;
-//                cube = i * i * i;
-//                if (i < 4) {
-//                    row = i + "      | " + square + "       | " + cube;
-//                } else {
-//                    row = i + "      | " + square + "      | " + cube;
-//                }
-//                System.out.format("%-15s\n", row);
-//            }
-//            // See if the user wants to continue
-//            System.out.print("Continue? (y/n): ");
-//            choice = scanner.next();
-//            System.out.println();
-//        }
-//        while (!choice.equalsIgnoreCase("n"));
     }
 }
