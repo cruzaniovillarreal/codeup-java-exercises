@@ -66,20 +66,20 @@ public class MethodsExercises {
 //        }
 //    };
 //
-    public static int factorialUsingForLoop() {
-        String userConfirm = "";
-        int fact = 0;
+    public static long factorialUsingForLoop() {
+        String userConfirm;
+        long fact;
         do {
-            System.out.print("Enter a number between 1 and 33: ");
+            System.out.print("Enter a number between 1 and 20: ");
             Scanner newNumber = new Scanner(System.in);
             int userNumber = newNumber.nextInt();
-            if (userNumber >= 1 && userNumber <= 33) {
+            if (userNumber >= 1 && userNumber <= 20) {
                 fact = 1;
                 for (int i = 2; i <= userNumber; i++) {
                     fact = fact * i;
                 }
                 System.out.println(fact);
-                System.out.println("Would you like to continue? [y/N]");
+                System.out.println("Would you like calculate the factorial for a new number? [y/N]");
                 Scanner newConfirm = new Scanner(System.in);
                 userConfirm = newConfirm.nextLine();
             } else {
