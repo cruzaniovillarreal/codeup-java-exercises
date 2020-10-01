@@ -52,23 +52,47 @@ public class MethodsExercises {
 //        multiplicationLoop(num1, times - 1);
 //    }
 
-    public static int getInteger(int min, int max) {
-        System.out.printf("Enter a number between %s and %s: ", min, max);
-        Scanner newNumber = new Scanner(System.in);
-        int userNumber = newNumber.nextInt();
-
-        if (userNumber >= min && userNumber <= max) {
-            System.out.printf("You're In! %s is between %s and %s \n", userNumber, min, max);
-            return userNumber;
-        } else {
-            System.out.printf("Sorry! %s is not between %s and %s \n", userNumber, min, max);
-             return getInteger(min, max);
-        }
-    };
+    //    public static int getInteger(int min, int max) {
+//        System.out.printf("Enter a number between %s and %s: ", min, max);
+//        Scanner newNumber = new Scanner(System.in);
+//        int userNumber = newNumber.nextInt();
+//
+//        if (userNumber >= min && userNumber <= max) {
+//            System.out.printf("You're In! %s is between %s and %s \n", userNumber, min, max);
+//            return userNumber;
+//        } else {
+//            System.out.printf("Sorry! %s is not between %s and %s \n", userNumber, min, max);
+//             return getInteger(min, max);
+//        }
+//    };
+//
+    public static int factorialUsingForLoop() {
+        String userConfirm = "";
+        int fact = 0;
+        do {
+            System.out.print("Enter a number between 1 and 33: ");
+            Scanner newNumber = new Scanner(System.in);
+            int userNumber = newNumber.nextInt();
+            if (userNumber >= 1 && userNumber <= 33) {
+                fact = 1;
+                for (int i = 2; i <= userNumber; i++) {
+                    fact = fact * i;
+                }
+                System.out.println(fact);
+                System.out.println("Would you like to continue? [y/N]");
+                Scanner newConfirm = new Scanner(System.in);
+                userConfirm = newConfirm.nextLine();
+            } else {
+                return factorialUsingForLoop();
+            }
+        } while (userConfirm.equalsIgnoreCase("y"));
+        return fact;
+    }
 
     public static void main(String[] args) {
-        int userInput = (getInteger(1, 10));
-        System.out.println("User Entered: "+userInput);
-    };
-
+//        int userInput = (getInteger(1, 10));
+//        System.out.println("User Entered: "+userInput);
+        long whateverWeWannaCallIt = (factorialUsingForLoop());
+        System.out.println(whateverWeWannaCallIt);
+    }
 }
