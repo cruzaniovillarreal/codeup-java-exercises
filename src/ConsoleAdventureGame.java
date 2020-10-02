@@ -38,7 +38,18 @@ public class ConsoleAdventureGame {
         return enemy;
     }
 
-    public static String landscapeRandomizer() {
+    public static String potionFinder() {
+        int randomNumber = randomizer(1, 3);
+        String foundPotion;
+        if (randomNumber == 2) {
+            foundPotion = "You found a potion!";
+        } else {
+            foundPotion = "No potions found.";
+        }
+        return foundPotion;
+    }
+
+    public static void landscapeRandomizer() {
         Scanner choice = new Scanner(System.in);
         int randomLand = randomizer(1, 3);
         String playerChoice;
@@ -47,31 +58,40 @@ public class ConsoleAdventureGame {
                 System.out.println("You come upon 2 tunnel entrances...");
                 System.out.println("Would you like to go left or right? [left/right]");
                 playerChoice = choice.nextLine();
+                System.out.println("You encounter a tunnel " + enemyRandomizer());
                 break;
             case 2:
-                System.out.println("You pass a locked door and luckily you have magic pocket fuzz...");
+                System.out.println("You pass a locked stone door, but luckily you have magic pocket fuzz...");
                 System.out.println("Would you like to pick the lock? [y/N]");
                 playerChoice = choice.nextLine();
+                System.out.println("You encounter a find a " + enemyRandomizer());
                 break;
             case 3:
                 System.out.println("You stumble upon a large body of water with a boat sitting on shore. There's something glowing on the island in the center of the lake... ");
                 System.out.println("Would you like to take the boat and check out the mysterious light? [y/N");
                 playerChoice = choice.nextLine();
+                if (playerChoice.equalsIgnoreCase("y")) {
+                    System.out.println("You encounter a Watery " + enemyRandomizer());
+                }
                 break;
             default:
                 playerChoice = "Nothing";
                 break;
         }
-        return playerChoice;
+//        return playerChoice;
     }
 
     public static void playerLevels() {
-        System.out.println(landscapeRandomizer());
+        landscapeRandomizer();
+        System.out.println(potionFinder());
+        System.out.println("");
+        Scanner scanner = new Scanner(System.in);
+        String readString = scanner.nextLine();
     }
 
     public static void gameStart() {
         System.out.println("Welcome to Spell-Lunker!");
-        System.out.print("Enter START to Begin:");
+        System.out.print("Enter START to Begin: ");
         Scanner toStart = new Scanner(System.in);
         String response = toStart.nextLine();
         if (response.equalsIgnoreCase("START")) {
