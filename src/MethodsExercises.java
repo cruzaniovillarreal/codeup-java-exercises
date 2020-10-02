@@ -1,5 +1,5 @@
 import java.util.Scanner;
-
+import java.util.Arrays;
 public class MethodsExercises {
 
 //    public static int additionMethod(int num1, int num2) {
@@ -72,51 +72,50 @@ public class MethodsExercises {
 //    }
 
 
-    public static long recursiveFactorial(long n) {
-        if (n <= 1)
-            return 1;
-        else
-            return n * recursiveFactorial(n - 1);
-    }
+//    public static long recursiveFactorial(long n) {
+//        if (n <= 1)
+//            return 1;
+//        else
+//            return n * recursiveFactorial(n - 1);
+//    }
 
-    public static long factorialUsingForLoop() {
-        String userConfirm;
-        long fact;
-        do {
-            System.out.print("Enter a number between 1 and 20: ");
-            Scanner newNumber = new Scanner(System.in);
-            int userNumber = newNumber.nextInt();
-            if (userNumber >= 1 && userNumber <= 20) {
-                System.out.println("Calculating: " + userNumber + "!");
-                fact = recursiveFactorial(userNumber);
-//                for loop
-//                fact = 1;
-//                for (int i = 2; i <= userNumber; i++) {
-//                    fact = fact * i;
-//                }
-                System.out.println(fact + " has been stored in the variable.");
-                System.out.println("Would you like to calculate the factorial of a new number? [y/N]");
-                Scanner newConfirm = new Scanner(System.in);
-                userConfirm = newConfirm.nextLine();
-            } else {
-                return factorialUsingForLoop();
-            }
-        } while (userConfirm.equalsIgnoreCase("y"));
-        return fact;
-    }
-
-
-    public static void main(String[] args) {
-        long whateverWeWannaCallIt = (factorialUsingForLoop());
-        System.out.println(whateverWeWannaCallIt);
-    }
-
+//    public static long factorialUsingForLoop() {
+//        String userConfirm;
+//        long fact;
+//        do {
+//            System.out.print("Enter a number between 1 and 20: ");
+//            Scanner newNumber = new Scanner(System.in);
+//            int userNumber = newNumber.nextInt();
+//            if (userNumber >= 1 && userNumber <= 20) {
+//                System.out.println("Calculating: " + userNumber + "!");
+//                fact = recursiveFactorial(userNumber);
+////                for loop
+////                fact = 1;
+////                for (int i = 2; i <= userNumber; i++) {
+////                    fact = fact * i;
+////                }
+//                System.out.println(fact + " has been stored in the variable.");
+//                System.out.println("Would you like to calculate the factorial of a new number? [y/N]");
+//                Scanner newConfirm = new Scanner(System.in);
+//                userConfirm = newConfirm.nextLine();
+//            } else {
+//                return factorialUsingForLoop();
+//            }
+//        } while (userConfirm.equalsIgnoreCase("y"));
+//        return fact;
+//    }
+//
+//    public static void main(String[] args) {
+//        long whateverWeWannaCallIt = (factorialUsingForLoop());
+//        System.out.println(whateverWeWannaCallIt);
+//    }
+//
+//
 
 //    public static int randomizer(int min, int max) {
 //        int range = (max - min) + 1;
-//            return (int) (Math.random() * range) + min;
+//        return (int) (Math.random() * range) + min;
 //    }
-//
 //    public static void results(int die1, int die2) {
 //        int dieResult1 = randomizer(1, die1);
 //        int dieResult2 = randomizer(1, die2);
@@ -127,7 +126,7 @@ public class MethodsExercises {
 //        Scanner toRollAgain = new Scanner(System.in);
 //        String rollAgain = toRollAgain.nextLine();
 //        if (rollAgain.equalsIgnoreCase("y")) {
-//             results(die1, die2);
+//            results(die1, die2);
 //        } else {
 //            System.out.println("Would you like to pick new die? [y/N]");
 //            if (toRollAgain.nextLine().equalsIgnoreCase("y")) {
@@ -135,7 +134,6 @@ public class MethodsExercises {
 //            }
 //        }
 //    }
-//
 //    public static void dice() {
 //        Scanner userInput = new Scanner(System.in);
 //        System.out.print("Enter number of sides for Die 1: ");
@@ -152,9 +150,57 @@ public class MethodsExercises {
 //        }
 //    }
 //
-//        public static void main(String[] args) {
+//    public static void main(String[] args) {
 //        dice();
 //    }
 
 
+
+    public static int randomDiceNum(int numMax) {
+        //Defining method for a random number generator
+        int numMin = 1;
+        int range = (numMax - numMin) + 1;
+        return (int) (Math.random() * range) + numMin;
+    };
+
+    public static int setDice(int n) {
+        return randomDiceNum(n);
+    };
+
+    public static int [] reroll(int one, int two) {
+        Scanner reroller = new Scanner(System.in);
+        int random1 = setDice(one);
+        int random2 = setDice(two);
+        int [] toReturn = {random1, random2};
+        System.out.println("Your random dice roll is [" +random1+", "+random2+"]");
+        System.out.println("Would you like to continue?[y/n]");
+        String toContinue = reroller.nextLine();
+        if(toContinue.equalsIgnoreCase("y")) {
+            return reroll(one, two);
+        } else {
+            return toReturn;
+        }
+    }
+
+    public static int[] rollDice() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter the number of sides for a pair of dice.");
+        int sideOne = scanner.nextInt();
+        int sideTwo = scanner.nextInt();
+        int[] numbers = {setDice(sideOne), setDice(sideTwo)};
+        int[] rerolledNumbers= {0, 0};
+        System.out.println("Your random dice roll is " + Arrays.toString(numbers) + ". Would you like to continue?[y/n]");
+        String choice = scanner.next();
+        if (choice.equalsIgnoreCase("y")) {
+            rerolledNumbers = reroll(sideOne, sideTwo);
+            return rerolledNumbers;
+        } else {
+            return numbers;
+        }
+    };
+
+    public static void main(String[] args) {
+        int[] randomRoll = rollDice();
+        System.out.println(Arrays.toString(randomRoll));
+    }
 }
