@@ -147,7 +147,11 @@ public class MethodsExercises {
         System.out.print("Enter number of sides for Die 2: ");
         int die2 = userInput.nextInt();
         System.out.print("Type \'roll\' to roll the dice: ");
-        if (userInput.next().equalsIgnoreCase("roll")) {
+        userInput.nextLine();
+        String answerToRoll = userInput.nextLine();
+        if (answerToRoll.isEmpty() || !answerToRoll.equalsIgnoreCase("roll")) {
+            dice();
+        } else {
             results(die1, die2);
         }
     }
