@@ -72,93 +72,89 @@ public class MethodsExercises {
 //    }
 
 
-//    public static long recursiveFactorial(long n) {
-//        if (n <= 1)
-//            return 1;
-//        else
-//            return n * recursiveFactorial(n - 1);
-//    }
-//
-//    public static long factorialUsingForLoop() {
-//        String userConfirm;
-//        long fact;
-//        do {
-//            System.out.print("Enter a number between 1 and 20: ");
-//            Scanner newNumber = new Scanner(System.in);
-//            int userNumber = newNumber.nextInt();
-//            if (userNumber >= 1 && userNumber <= 20) {
-//                System.out.println("Calculating: " + userNumber + "!");
-//                fact = recursiveFactorial(userNumber);
-////                for loop
-////                fact = 1;
-////                for (int i = 2; i <= userNumber; i++) {
-////                    fact = fact * i;
-////                }
-//                System.out.println(fact + " has been stored in the variable.");
-//                System.out.println("Would you like calculate the factorial for a new number? [y/N]");
-//                Scanner newConfirm = new Scanner(System.in);
-//                userConfirm = newConfirm.nextLine();
-//            } else {
-//                return factorialUsingForLoop();
-//            }
-//        } while (userConfirm.equalsIgnoreCase("y"));
-//        return fact;
-//    }
-//
-//
-//    public static void main(String[] args) {
-//        long whateverWeWannaCallIt = (factorialUsingForLoop());
-//        System.out.println(whateverWeWannaCallIt);
-//    }
-//
-
-    public static int randomizer(int numberOfSides) {
-        int result = 0;
-        int min = 1;
-        int max = numberOfSides;
-        int range = max - min + 1;
-        for (int i = 0; i < numberOfSides; i++) {
-            result = (int) (Math.random() * range) + min;
-        } return result;
+    public static long recursiveFactorial(long n) {
+        if (n <= 1)
+            return 1;
+        else
+            return n * recursiveFactorial(n - 1);
     }
 
-    public static void results(int die1, int die2) {
-        int dieResult1 = randomizer(die1);
-        int dieResult2 = randomizer(die2);
-        System.out.println("Die 1 result: "+dieResult1);
-        System.out.println("Die 2 result: "+dieResult2);
-        System.out.println("Roll again? [y/N]");
-        Scanner toRollAgain = new Scanner(System.in);
-        String rollAgain = toRollAgain.nextLine();
-        if (rollAgain.equalsIgnoreCase("y")) {
-            results(die1, die2);
-        } else {
-            System.out.println("Would you like to pick new die? [y/N]");
-            if (toRollAgain.nextLine().equalsIgnoreCase("y")) {
-                dice();
+    public static long factorialUsingForLoop() {
+        String userConfirm;
+        long fact;
+        do {
+            System.out.print("Enter a number between 1 and 20: ");
+            Scanner newNumber = new Scanner(System.in);
+            int userNumber = newNumber.nextInt();
+            if (userNumber >= 1 && userNumber <= 20) {
+                System.out.println("Calculating: " + userNumber + "!");
+                fact = recursiveFactorial(userNumber);
+//                for loop
+//                fact = 1;
+//                for (int i = 2; i <= userNumber; i++) {
+//                    fact = fact * i;
+//                }
+                System.out.println(fact + " has been stored in the variable.");
+                System.out.println("Would you like to calculate the factorial of a new number? [y/N]");
+                Scanner newConfirm = new Scanner(System.in);
+                userConfirm = newConfirm.nextLine();
+            } else {
+                return factorialUsingForLoop();
             }
-        }
+        } while (userConfirm.equalsIgnoreCase("y"));
+        return fact;
     }
 
-    public static void dice() {
-        Scanner userInput = new Scanner(System.in);
-        System.out.print("Enter number of sides for Die 1: ");
-        int die1 = userInput.nextInt();
-        System.out.print("Enter number of sides for Die 2: ");
-        int die2 = userInput.nextInt();
-        System.out.print("Type \'roll\' to roll the dice: ");
-        userInput.nextLine();
-        String answerToRoll = userInput.nextLine();
-        if (answerToRoll.isEmpty() || !answerToRoll.equalsIgnoreCase("roll")) {
-            dice();
-        } else {
-            results(die1, die2);
-        }
+
+    public static void main(String[] args) {
+        long whateverWeWannaCallIt = (factorialUsingForLoop());
+        System.out.println(whateverWeWannaCallIt);
     }
 
-        public static void main(String[] args) {
-        dice();
-    }
+
+//    public static int randomizer(int min, int max) {
+//        int range = (max - min) + 1;
+//            return (int) (Math.random() * range) + min;
+//    }
+//
+//    public static void results(int die1, int die2) {
+//        int dieResult1 = randomizer(1, die1);
+//        int dieResult2 = randomizer(1, die2);
+////        String combinedResults = "Die 1 result: "+dieResult1+"\nDie 2 result: "+dieResult2;
+//        System.out.println("Die 1 result: "+dieResult1);
+//        System.out.println("Die 2 result: "+dieResult2);
+//        System.out.println("Roll again? [y/N]");
+//        Scanner toRollAgain = new Scanner(System.in);
+//        String rollAgain = toRollAgain.nextLine();
+//        if (rollAgain.equalsIgnoreCase("y")) {
+//             results(die1, die2);
+//        } else {
+//            System.out.println("Would you like to pick new die? [y/N]");
+//            if (toRollAgain.nextLine().equalsIgnoreCase("y")) {
+//                dice();
+//            }
+//        }
+//    }
+//
+//    public static void dice() {
+//        Scanner userInput = new Scanner(System.in);
+//        System.out.print("Enter number of sides for Die 1: ");
+//        int die1 = userInput.nextInt();
+//        System.out.print("Enter number of sides for Die 2: ");
+//        int die2 = userInput.nextInt();
+//        System.out.print("Type 'roll' to roll the dice: ");
+//        userInput.nextLine();
+//        String answerToRoll = userInput.nextLine();
+//        if (answerToRoll.isEmpty() || !answerToRoll.equalsIgnoreCase("roll")) {
+//            dice();
+//        } else {
+//            results(die1, die2);
+//        }
+//    }
+//
+//        public static void main(String[] args) {
+//        dice();
+//    }
 
 
 }
