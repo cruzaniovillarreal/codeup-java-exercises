@@ -28,28 +28,28 @@ public class ConsoleAdventureGame {
         String enemy;
         switch (randomNumber) {
             case 1:
-                enemy = "Zombie!";
+                enemy = "zombie!";
                 break;
             case 2:
-                enemy = "Skeleton!";
+                enemy = "skeleton!";
                 break;
             case 3:
-                enemy = "Troll!";
+                enemy = "troll!";
                 break;
             case 4:
-                enemy = "Bat!";
+                enemy = "bat!";
                 break;
             case 5:
-                enemy = "Wraith!";
+                enemy = "wraith!";
                 break;
             case 6:
-                enemy = "Vampire!";
+                enemy = "vampire!";
                 break;
             case 7:
-                enemy = "Werewolf!";
+                enemy = "werewolf!";
                 break;
             case 8:
-                enemy = "Gremlin!";
+                enemy = "gremlin!";
                 break;
             case 9:
                 enemy = "Spider!";
@@ -82,37 +82,37 @@ public class ConsoleAdventureGame {
         String enemy = enemyRandomizer();
         switch (randomLand) {
             case 1:
-                System.out.println("You come upon 2 tunnel entrances...");
+                System.out.println("\nYou come upon 2 tunnel entrances...");
                 System.out.println("Would you like to go left or right? [left/right]");
                 playerChoice = choice.nextLine();
                 System.out.println("You encounter a tunnel " + enemy);
                 break;
             case 2:
-                System.out.println("You pass a locked stone door, but luckily you have magic pocket fuzz...");
+                System.out.println("\nYou pass a locked stone door, but luckily you have magic pocket fuzz...");
                 System.out.println("Would you like to pick the lock? [y/N]");
                 playerChoice = choice.nextLine();
                 System.out.println("You encounter a " + enemy);
                 break;
             case 3:
-                System.out.println("You hear whispering escaping from a crack just big enough to squeeze through...");
+                System.out.println("\nYou hear whispering escaping from a crack just big enough to squeeze through...");
                 System.out.println("Investigate? [y/N]");
                 playerChoice = choice.nextLine();
                 System.out.println("You encounter a " + enemy);
                 break;
             case 4:
-                System.out.println("The walls tremble as someone cries out \""+name.toUpperCase()+"\"!");
+                System.out.println("\nThe walls tremble as someone cries out \""+name.toUpperCase()+"\"!");
                 System.out.println("Hurry to their aid? [y/N]");
                 playerChoice = choice.nextLine();
                 System.out.println("You encounter a " + enemy);
                 break;
             case 5:
-                System.out.println("As you continue to walk you sense you're not alone...");
+                System.out.println("\nAs you continue to walk you sense you're not alone...");
                 System.out.println("Cast a spell to see what's there? [y/N]");
                 playerChoice = choice.nextLine();
                 System.out.println("You encounter a " + enemy);
                 break;
             case 6:
-                System.out.println("You stumble upon a large body of water with a boat sitting on shore. There's something glowing on the island in the center of the lake... ");
+                System.out.println("\nYou stumble upon a large body of water with a boat sitting on shore.\nThere's something glowing on the island in the center of the lake... ");
                 System.out.println("Would you like to take the boat and check out the mysterious light? [y/N]");
                 playerChoice = choice.nextLine();
                 if (playerChoice.equalsIgnoreCase("y")) {
@@ -132,7 +132,7 @@ public class ConsoleAdventureGame {
         if (playerlife <= 0) {
             return playerlife;
         } else if (enemyHealth <= 0) {
-            System.out.print("Enemy Defeated!\n");
+            System.out.print(ANSI_GREEN+"Enemy Defeated!\n"+ANSI_RESET);
             return playerlife;
         } else {
             System.out.printf("You have %s HP. The enemy has %s HP.\n", playerlife, enemyHealth);
@@ -154,7 +154,7 @@ public class ConsoleAdventureGame {
             } else if (response.equalsIgnoreCase("D")) {
                 playerHealth += 10;
                 int retaliationDamage = randomizer(1, 15);
-                System.out.printf("You drink a potion restoring 5 health.\nThe enemy retaliates dealing %s damage!\n", retaliationDamage);
+                System.out.printf("You drink a potion restoring 10 health.\nThe enemy retaliates dealing %s damage!\n", retaliationDamage);
                 playerHealth -= retaliationDamage;
                 return fighter(playerHealth, enemyHealth);
             }
@@ -177,7 +177,7 @@ public class ConsoleAdventureGame {
                 playerLevels(lifeAfterFight, name);
             }
         } else {
-            System.out.print("You have been killed. Would you like to play again?");
+            System.out.print(ANSI_RED+"You have been killed.\n"+ANSI_RESET+"Would you like to play again? [y/N]");
             if (scanner.nextLine().equalsIgnoreCase("y")) {
                 gameStart();
             } else {
@@ -195,13 +195,12 @@ public class ConsoleAdventureGame {
         if (response.equalsIgnoreCase("START")) {
             String name = userName();
             int life = startingLife();
-            System.out.printf("\n"+ANSI_CYAN+"%s enters the eerie cavern in search of fortune with %s HP.\n\n"+ANSI_RESET, name, life);
+            System.out.printf("\n"+ANSI_CYAN+"%s enters the eerie cavern in search of fortune with %s HP.\n"+ANSI_RESET, name, life);
             playerLevels(life, name);
         } else {
             gameStart();
         }
     }
-
 
     public static void main(String[] args) {
         gameStart();
