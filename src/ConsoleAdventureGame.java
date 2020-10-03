@@ -9,10 +9,10 @@ public class ConsoleAdventureGame {
     }
 
     public static int startingLife() {
-        System.out.print("Enter your starting Life Total: ");
+        System.out.print("Enter your starting Life Total (Max-30): ");
         Scanner userLife = new Scanner(System.in);
         int life = userLife.nextInt();
-        if (life > 50 || life < 1) {
+        if (life > 30 || life < 1) {
             return startingLife();
         }
         return life;
@@ -24,26 +24,41 @@ public class ConsoleAdventureGame {
     }
 
     public static String enemyRandomizer() {
-        int randomNumber = randomizer(1, 5);
+        int randomNumber = randomizer(1, 10);
         String enemy;
         switch (randomNumber) {
             case 1:
-                enemy = "Zombie";
+                enemy = "Zombie!";
                 break;
             case 2:
-                enemy = "Skeleton";
+                enemy = "Skeleton!";
                 break;
             case 3:
-                enemy = "Troll";
+                enemy = "Troll!";
                 break;
             case 4:
-                enemy = "Bat";
+                enemy = "Bat!";
                 break;
             case 5:
-                enemy = "Wraith";
+                enemy = "Wraith!";
+                break;
+            case 6:
+                enemy = "Vampire!";
+                break;
+            case 7:
+                enemy = "Werewolf!";
+                break;
+            case 8:
+                enemy = "Gremlin!";
+                break;
+            case 9:
+                enemy = "Spider!";
+                break;
+            case 10:
+                enemy = "Poor Old Man!";
                 break;
             default:
-                enemy = "Vampire";
+                enemy = "Nothing";
                 break;
         }
         return enemy;
@@ -60,9 +75,9 @@ public class ConsoleAdventureGame {
         return foundPotion;
     }
 
-    public static String landscapeRandomizer() {
+    public static String landscapeRandomizer(String name) {
         Scanner choice = new Scanner(System.in);
-        int randomLand = randomizer(1, 3);
+        int randomLand = randomizer(1, 6);
         String playerChoice;
         String enemy = enemyRandomizer();
         switch (randomLand) {
@@ -79,6 +94,24 @@ public class ConsoleAdventureGame {
                 System.out.println("You encounter a " + enemy);
                 break;
             case 3:
+                System.out.println("You hear whispering escaping from a crack just big enough to squeeze through...");
+                System.out.println("Investigate? [y/N]");
+                playerChoice = choice.nextLine();
+                System.out.println("You encounter a " + enemy);
+                break;
+            case 4:
+                System.out.println("The walls tremble as someone cries out \""+name.toUpperCase()+"\"!");
+                System.out.println("Hurry to their aid? [y/N]");
+                playerChoice = choice.nextLine();
+                System.out.println("You encounter a " + enemy);
+                break;
+            case 5:
+                System.out.println("As you continue to walk you sense you're not alone...");
+                System.out.println("Cast a spell to see what's there? [y/N]");
+                playerChoice = choice.nextLine();
+                System.out.println("You encounter a " + enemy);
+                break;
+            case 6:
                 System.out.println("You stumble upon a large body of water with a boat sitting on shore. There's something glowing on the island in the center of the lake... ");
                 System.out.println("Would you like to take the boat and check out the mysterious light? [y/N]");
                 playerChoice = choice.nextLine();
@@ -108,7 +141,7 @@ public class ConsoleAdventureGame {
             int playerHealth = playerlife;
             if (response.equalsIgnoreCase("A")) {
                 int attackDamage = randomizer(1, 10);
-                System.out.printf("You deal %s damage.\n", attackDamage);
+                System.out.printf("You deal %s damage!\n", attackDamage);
                 enemyHealth -= attackDamage;
                 if (enemyHealth > 0) {
                     int retaliationDamage = randomizer(1, 15);
@@ -119,7 +152,7 @@ public class ConsoleAdventureGame {
                     return fighter(playerlife, enemyHealth);
                 }
             } else if (response.equalsIgnoreCase("D")) {
-                playerHealth += 5;
+                playerHealth += 10;
                 int retaliationDamage = randomizer(1, 15);
                 System.out.printf("You drink a potion restoring 5 health.\nThe enemy retaliates dealing %s damage!\n", retaliationDamage);
                 playerHealth -= retaliationDamage;
@@ -130,9 +163,9 @@ public class ConsoleAdventureGame {
     }
 
 
-    public static void playerLevels(int life) {
+    public static void playerLevels(int life, String name) {
         int playerHealth = life;
-        String enemy = landscapeRandomizer();
+        String enemy = landscapeRandomizer(name);
         int enemyHealth = randomizer(1, 20);
         int lifeAfterFight = fighter(playerHealth, enemyHealth);
         Scanner scanner = new Scanner(System.in);
@@ -141,7 +174,7 @@ public class ConsoleAdventureGame {
             System.out.print("Enter GO to continue: ");
             String readString = scanner.nextLine();
             if (readString.equalsIgnoreCase("GO")) {
-                playerLevels(lifeAfterFight);
+                playerLevels(lifeAfterFight, name);
             }
         } else {
             System.out.print("You have been killed. Would you like to play again?");
@@ -162,8 +195,8 @@ public class ConsoleAdventureGame {
         if (response.equalsIgnoreCase("START")) {
             String name = userName();
             int life = startingLife();
-            System.out.printf("%s enters the eerie cavern in search of fortune with %s HP\n", name, life);
-            playerLevels(life);
+            System.out.printf("\n"+ANSI_CYAN+"%s enters the eerie cavern in search of fortune with %s HP.\n\n"+ANSI_RESET, name, life);
+            playerLevels(life, name);
         } else {
             gameStart();
         }
