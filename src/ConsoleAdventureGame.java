@@ -52,10 +52,10 @@ public class ConsoleAdventureGame {
                 enemy = "gremlin!";
                 break;
             case 9:
-                enemy = "Spider!";
+                enemy = "spider!";
                 break;
             case 10:
-                enemy = "Poor Old Man!";
+                enemy = "poor old man!";
                 break;
             default:
                 enemy = "Nothing";
@@ -64,15 +64,21 @@ public class ConsoleAdventureGame {
         return enemy;
     }
 
-    public static String potionFinder() {
+    public static int potionFinder(int potionCounter) {
         int randomNumber = randomizer(1, 3);
-        String foundPotion;
+        int foundPotion = potionCounter;
         if (randomNumber == 2) {
-            foundPotion = ANSI_GREEN+"You found a potion!"+ANSI_RESET;
+            foundPotion++;
+            System.out.print(ANSI_GREEN+"The enemy dropped a potion!\n"+ANSI_RESET);
         } else {
-            foundPotion = ANSI_RED+"No potions found."+ANSI_RESET;
+            System.out.print(ANSI_RED+"No potion was dropped.\n"+ANSI_RESET);
         }
         return foundPotion;
+    }
+
+    public static int usePotion(int potionCount) {
+        potionCount--;
+        return potionCount;
     }
 
     public static String landscapeRandomizer(String name) {
@@ -116,7 +122,7 @@ public class ConsoleAdventureGame {
                 System.out.println("Would you like to take the boat and check out the mysterious light? [y/N]");
                 playerChoice = choice.nextLine();
                 if (playerChoice.equalsIgnoreCase("y")) {
-                    enemy = "Watery "+enemy;
+                    enemy = "watery "+enemy;
                     System.out.println("You encounter a " + enemy);
                 }
                 break;
@@ -127,57 +133,68 @@ public class ConsoleAdventureGame {
         return enemy;
     }
 
-    public static int fighter(int playerlife, int enemyHealth) {
+    public static int[] fighter(int playerlife, int enemyHealth, int potionCount) {
         Scanner scanner1 = new Scanner(System.in);
+        int [] lifeAndPotions = {playerlife, potionCount};
         if (playerlife <= 0) {
-            return playerlife;
+            return lifeAndPotions;
         } else if (enemyHealth <= 0) {
             System.out.print(ANSI_GREEN+"Enemy Defeated!\n"+ANSI_RESET);
-            return playerlife;
+            return lifeAndPotions;
         } else {
             System.out.printf("You have %s HP. The enemy has %s HP.\n", playerlife, enemyHealth);
+            System.out.printf("Potions: %s\n", potionCount);
             System.out.println("Attack(A) or Drink Potion(D)? [A/D]");
             String response = scanner1.nextLine();
             int playerHealth = playerlife;
             if (response.equalsIgnoreCase("A")) {
                 int attackDamage = randomizer(1, 10);
-                System.out.printf("You deal %s damage!\n", attackDamage);
+                System.out.printf("\nYou deal %s damage!\n", attackDamage);
                 enemyHealth -= attackDamage;
                 if (enemyHealth > 0) {
                     int retaliationDamage = randomizer(1, 15);
                     playerHealth -= retaliationDamage;
-                    System.out.printf("The enemy retaliates dealing %s damage!\n", retaliationDamage);
-                    return fighter(playerHealth, enemyHealth);
+                    System.out.printf("The enemy retaliates dealing %s damage!\n\n", retaliationDamage);
+                    return fighter(playerHealth, enemyHealth, potionCount);
                 } else {
-                    return fighter(playerlife, enemyHealth);
+                    return fighter(playerlife, enemyHealth, potionCount);
                 }
-            } else if (response.equalsIgnoreCase("D")) {
+            } else if (response.equalsIgnoreCase("D") && potionCount > 0) {
+                int potionsLeft = potionCount--;
                 playerHealth += 10;
                 int retaliationDamage = randomizer(1, 15);
-                System.out.printf("You drink a potion restoring 10 health.\nThe enemy retaliates dealing %s damage!\n", retaliationDamage);
+                System.out.printf("\nYou drink a potion restoring 10 health.\nThe enemy retaliates dealing %s damage!\n\n", retaliationDamage);
                 playerHealth -= retaliationDamage;
-                return fighter(playerHealth, enemyHealth);
+                return fighter(playerHealth, enemyHealth, potionCount);
+            } else if (response.equalsIgnoreCase("D") && potionCount <= 0) {
+                System.out.print(ANSI_RED+"\nNo potions available"+ANSI_RESET);
+                return fighter(playerHealth, enemyHealth, potionCount);
             }
-            return playerHealth;
+            return lifeAndPotions;
         }
     }
 
 
-    public static void playerLevels(int life, String name) {
+    public static void playerLevels(int life, String name, int killCount, int potionCount) {
         int playerHealth = life;
         String enemy = landscapeRandomizer(name);
         int enemyHealth = randomizer(1, 20);
-        int lifeAfterFight = fighter(playerHealth, enemyHealth);
+        int [] lifeAndPotions = fighter(playerHealth, enemyHealth, potionCount);
+        int lifeAfterFight = lifeAndPotions[0];
+        int potionsAfterFight = lifeAndPotions[1];
+        int killCounter = killCount;
         Scanner scanner = new Scanner(System.in);
         if (lifeAfterFight > 0) {
-            System.out.println(potionFinder());
-            System.out.print("Enter GO to continue: ");
+            int potionCounter = potionFinder(potionsAfterFight);
+            System.out.print("\nEnter GO to continue: ");
             String readString = scanner.nextLine();
             if (readString.equalsIgnoreCase("GO")) {
-                playerLevels(lifeAfterFight, name);
+                playerLevels(lifeAfterFight, name, killCounter+1, potionCounter);
             }
         } else {
-            System.out.print(ANSI_RED+"You have been killed.\n"+ANSI_RESET+"Would you like to play again? [y/N]");
+            System.out.print(ANSI_RED+"You have been killed.\n"+ANSI_RESET);
+            System.out.printf(ANSI_YELLOW+"Enemies Vanquished: %s\n"+ANSI_RESET, killCounter);
+            System.out.print("Would you like to play again? [y/N]\n");
             if (scanner.nextLine().equalsIgnoreCase("y")) {
                 gameStart();
             } else {
@@ -189,14 +206,14 @@ public class ConsoleAdventureGame {
 
     public static void gameStart() {
         System.out.println(ANSI_BLUE+"Welcome to Spell-Lunker!"+ANSI_RESET);
-        System.out.print("Enter START to Begin: ");
+        System.out.print("Enter "+ANSI_GREEN+"START"+ANSI_RESET+" to Begin: ");
         Scanner toStart = new Scanner(System.in);
         String response = toStart.nextLine();
         if (response.equalsIgnoreCase("START")) {
             String name = userName();
             int life = startingLife();
             System.out.printf("\n"+ANSI_CYAN+"%s enters the eerie cavern in search of fortune with %s HP.\n"+ANSI_RESET, name, life);
-            playerLevels(life, name);
+            playerLevels(life, name, 0, 5);
         } else {
             gameStart();
         }
