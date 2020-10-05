@@ -1,14 +1,16 @@
 package util;
 
+import java.util.Scanner;
+
 public class Input {
-    private String scanner;
+    public Scanner scanner;
 
     public String getString() {
-
+        return scanner;
     }
 
     public boolean yesNo() {
-
+        if ()
     }
 
     public int getInt(int min, int max) {
