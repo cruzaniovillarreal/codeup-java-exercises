@@ -12,6 +12,12 @@ public class InputTest {
         System.out.println(newScanner.getInt());
         System.out.println(newScanner.getDouble(10.00, 20.00));
         System.out.println(newScanner.getDouble());
+        System.out.println(newScanner.getString("Hello from the parameter!"));
+        System.out.println(newScanner.yesNo("Yes"));
+        System.out.println(newScanner.getInt(1, 10, "Give me an integer between 1 and 10"));
+        System.out.println(newScanner.getInt("Give me an integer.."));
+        System.out.println(newScanner.getDouble(10.00, 20.00, "Give me a decimal number between 1 and 10"));
+        System.out.println(newScanner.getDouble("Give me a decimal number"));
     }
 
 }
