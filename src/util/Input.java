@@ -3,7 +3,13 @@ import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.Scanner;
 
 public class Input {
-    private final Scanner scanner = new Scanner(System.in);
+    private Scanner scanner;
+//    private final Scanner scanner = new Scanner(System.in);
+
+    //"alternative" to above: make constructor
+     public Input() {
+     this.scanner = new Scanner(System.in);
+    }
 
     public String getString() {
         System.out.print("Enter a line to return: ");
