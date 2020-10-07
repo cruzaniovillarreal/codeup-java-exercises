@@ -1,6 +1,19 @@
 package movies;
 
+import java.util.Arrays;
+
 public class MoviesArray {
+
+    public static Movie[] addMovie(Movie[] arrayOfMovies, Movie movieToAdd) {
+        Movie[] copyToReturn = Arrays.copyOf(arrayOfMovies, arrayOfMovies.length+1);
+        copyToReturn[copyToReturn.length-1] = movieToAdd;
+        return copyToReturn;
+//        copyToReturn[arrayOfPersons.length] = personToAdd;
+//        for (Person newPerson: copyToReturn) {
+//            System.out.println(newPerson.getName());
+//        }
+    }
+
     public static Movie[] findAll() {
         return new Movie[]{
                 new Movie("Citizen Kane", "drama"),

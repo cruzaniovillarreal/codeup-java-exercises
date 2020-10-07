@@ -33,7 +33,6 @@ public class Input {
 
     public boolean yesNo(String prompt) {
         System.out.print(prompt);
-        scanner.nextLine();
         String capture = scanner.nextLine();
         return capture.equalsIgnoreCase("y") || capture.equalsIgnoreCase("yes");
     }
