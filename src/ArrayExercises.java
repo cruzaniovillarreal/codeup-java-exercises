@@ -23,7 +23,6 @@ public class ArrayExercises {
         Person newGuy = new Person("Fred");
         addPerson(listOfPeople, newGuy);
         // OR
-
         Person[] newListOfPeople = {
                 new Person("Mike"),
                 new Person("John"),
