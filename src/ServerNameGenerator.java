@@ -1,57 +1,44 @@
+import util.Input;
+
 import java.util.Scanner;
 
 public class ServerNameGenerator {
+    public static String[] adjectives = {
+            "Grand",
+            "Suspicious",
+            "Elegant",
+            "Nervous",
+            "Scary",
+            "Zealous",
+            "Scruffy",
+            "Muscular",
+            "Polite",
+            "Tiny"
+    };
+
+    public static String[] nouns = {
+            "Mountain Chicken",
+            "Ostrich",
+            "Pigeon",
+            "Wunderpus photogenicus",
+            "Spiny Lumpsucker",
+            "Pistol Shrimp",
+            "Pink Fairy Armadillo",
+            "Rasberry Crazy Ant",
+            "Chicken Turtle",
+            "Goblin Shark"
+    };
 
     public static String randomReturn(String[] array) {
-        return array[(int) (Math.random() * 9)];
+        return array[(int) (Math.random() * array.length-1)];
     }
 
-//        String[] nouns = new String[10];
-
-//        "Mountain Chicken";
-//        "Ostrich";
-//        "Pigeon";
-//        "Wunderpus photogenicus";
-//        "Spiny Lumpsucker";
-//        "Pistol Shrimp";
-//        "Pink Fairy Armadillo";
-//        "Rasberry Crazy Ant";
-//        "Chicken Turtle";
-//        "Goblin Shark";
 
     public static void main(String[] args) {
-        String[] adjectives = {
-                "Grand",
-                "Suspicious",
-                "Elegant",
-                "Nervous",
-                "Scary",
-                "Zealous",
-                "Scruffy",
-                "Muscular",
-                "Polite",
-                "Tiny"
-        };
-
-        String[] nouns = {
-                "Mountain Chicken",
-                "Ostrich",
-                "Pigeon",
-                "Wunderpus photogenicus",
-                "Spiny Lumpsucker",
-                "Pistol Shrimp",
-                "Pink Fairy Armadillo",
-                "Rasberry Crazy Ant",
-                "Chicken Turtle",
-                "Goblin Shark"
-        };
-        String toContinue;
+        boolean toContinue;
         do {
-            System.out.println("Your server name is: \n"+randomReturn(adjectives)+"-"+randomReturn(nouns));
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Would you like to generate another server name? [y/n]");
-            toContinue = scanner.nextLine();
-        } while(toContinue.equalsIgnoreCase("y") || toContinue.equalsIgnoreCase("yes"));
+            System.out.println("Your server name is: \n"+randomReturn(ServerNameGenerator.adjectives)+"-"+randomReturn(nouns));
+            toContinue = new Input().yesNo("Return to directory? [y/N]");
+        } while(toContinue);
     }
-
 }

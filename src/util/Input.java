@@ -4,15 +4,17 @@ import java.util.Scanner;
 
 public class Input {
     private Scanner scanner;
-//    private final Scanner scanner = new Scanner(System.in);
 
-    //"alternative" to above: make constructor
+
      public Input() {
      this.scanner = new Scanner(System.in);
     }
+    public Input(String prompt) {
+        System.out.println(prompt);
+        this.scanner = new Scanner(System.in);
+    }
 
     public String getString() {
-        System.out.print("Enter a line to return: ");
         return scanner.nextLine();
     }
 
@@ -22,14 +24,12 @@ public class Input {
     }
 
     public boolean yesNo() {
-        System.out.print("\nEnter variations of yes: ");
         String capture = scanner.nextLine();
         return capture.equalsIgnoreCase("y") || capture.equalsIgnoreCase("yes");
     }
 
     public boolean yesNo(String prompt) {
         System.out.print(prompt);
-        scanner.nextLine();
         String capture = scanner.nextLine();
         return capture.equalsIgnoreCase("y") || capture.equalsIgnoreCase("yes");
     }
@@ -55,7 +55,6 @@ public class Input {
     }
 
     public int getInt() {
-        System.out.print("\nEnter an integer: ");
         return scanner.nextInt();
     }
 
