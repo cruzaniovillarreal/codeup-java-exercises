@@ -54,16 +54,13 @@ public class MoviesApplication {
                     String name = new Input().getString("Enter name of movie: ");
                     String category = new Input().getString("Enter category of movie: ");
                     Movie addToArray = new Movie(name, category);
-                    Movie[] newList = MoviesArray.addMovie(MoviesArray.findAll(), addToArray);
-                    for (Movie movie : newList) {
+                    for (Movie movie : MoviesArray.addMovie(MoviesArray.findAll(), addToArray)) {
                         System.out.println(movie.nameGetter() + " - " + movie.categoryGetter());
                     }
                     break;
                 default:
                     break;
             }
-//            Input proceed = new Input();
-//            toContinue = proceed.yesNo("Return to directory? [y/N]");
             toContinue = new Input().yesNo("Return to directory? [y/N]");
         } while(toContinue);
     }

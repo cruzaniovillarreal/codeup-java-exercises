@@ -8,10 +8,6 @@ public class MoviesArray {
         Movie[] copyToReturn = Arrays.copyOf(arrayOfMovies, arrayOfMovies.length+1);
         copyToReturn[copyToReturn.length-1] = movieToAdd;
         return copyToReturn;
-//        copyToReturn[arrayOfPersons.length] = personToAdd;
-//        for (Person newPerson: copyToReturn) {
-//            System.out.println(newPerson.getName());
-//        }
     }
 
     public static Movie[] findAll() {
