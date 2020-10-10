@@ -204,10 +204,9 @@ public class ConsoleAdventureGame {
         Scanner toStart = new Scanner(System.in);
         String response = toStart.nextLine();
         if (response.equalsIgnoreCase("START")) {
-            String name = userName();
-            int life = startingLife();
-            System.out.printf("\n"+ANSI_CYAN+"%s enters the eerie cavern in search of fortune with %s HP.\n"+ANSI_RESET, name, life);
-            playerLevels(life, name, 0, 5);
+            Character player = new Character(userName(), startingLife());
+            System.out.printf("\n"+ANSI_CYAN+"%s enters the eerie cavern in search of fortune with %s HP.\n"+ANSI_RESET, player.name, player.health);
+            playerLevels(player.health, player.name, 0, 5);
         } else {
             gameStart();
         }
