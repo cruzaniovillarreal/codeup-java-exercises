@@ -113,6 +113,12 @@ public class ConsoleAdventureGame {
                 System.out.println("You encounter a " + enemy);
                 break;
             case 6:
+                System.out.println("\nA small ball of light whips past you, illuminating a small passage.");
+                System.out.println("Follow your new found friend? [y/N]");
+                playerChoice = choice.nextLine();
+                System.out.println("You encounter a " + enemy);
+                break;
+            case 7:
                 System.out.println("\nYou stumble upon a large body of water with a boat sitting on shore.\nThere's something glowing on the island in the center of the lake... ");
                 System.out.println("Would you like to take the boat and check out the mysterious light? [y/N]");
                 playerChoice = choice.nextLine();
