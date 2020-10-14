@@ -17,6 +17,7 @@ public class GradesApplication {
         student1.addGrade(90);
         student1.addGrade(90);
         student1.addGrade(90);
+        students.put("JackyBoy", student1);
         Student student2 = new Student("Eddy");
         student2.recordAttendance("2017-10-17", "A");
         student2.recordAttendance("2017-10-18", "P");
@@ -24,6 +25,7 @@ public class GradesApplication {
         student2.addGrade(60);
         student2.addGrade(90);
         student2.addGrade(100);
+        students.put("EddyBoy", student2);
         Student student3 = new Student("James");
         student3.recordAttendance("2017-10-17", "P");
         student3.recordAttendance("2017-10-18", "P");
@@ -31,6 +33,7 @@ public class GradesApplication {
         student3.addGrade(70);
         student3.addGrade(80);
         student3.addGrade(90);
+        students.put("JamesyBoy", student3);
         Student student4 = new Student("Max");
         student4.recordAttendance("2017-10-17", "A");
         student4.recordAttendance("2017-10-18", "A");
@@ -38,9 +41,6 @@ public class GradesApplication {
         student4.addGrade(80);
         student4.addGrade(50);
         student4.addGrade(60);
-        students.put("JackyBoy", student1);
-        students.put("EddyBoy", student2);
-        students.put("JamesyBoy", student3);
         students.put("MaxyBoy", student4);
         System.out.println(students);
 
@@ -69,9 +69,10 @@ public class GradesApplication {
                 System.out.println("Class Size: "+classSize);
                 System.out.println("Class Average: "+classTotal/allGrades.size());
             } else if (!students.containsKey(userInput)) {
-                System.out.println("No users exist with the entered username.");
+                System.err.println("No users exist with the entered username.");
             } else {
                 System.out.println("Name: "+students.get(userInput).getName());
+                System.out.println("Github Username: "+userInput);
                 System.out.println("Grades: "+students.get(userInput).getGrades());
                 System.out.println("Grade Average: "+students.get(userInput).getGradeAverage());
                 System.out.printf("Attendance Percentage: %.2f", students.get(userInput).attendancePercentage());
