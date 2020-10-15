@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class groceryList {
     private final String[] selectableCats = {"Fruit", "Bread", "Meat", "Vegetables", "Pantry", "Sweet", "Snacks", "Frozen"};
     private ArrayList<groceryItem> itemList;
-
+    //Hashmap keys are item names/create new branch
     public groceryList() {
         this.itemList = new ArrayList<>();
     }
@@ -29,6 +29,8 @@ public class groceryList {
     }
 
     public static void main(String[] args) {
+        Double hello = new Input().getDouble();
+        System.out.println(hello);
         System.out.println("Welcome to List and Forget!");
         if (new Input().yesNo("Would you like to start a new list? [y/N]")) {
             groceryList newGroceryList = new groceryList();
