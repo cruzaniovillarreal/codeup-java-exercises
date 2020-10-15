@@ -36,29 +36,45 @@ public class Input {
     }
 
     public int getInt(int min, int max) {
-        System.out.printf("\nEnter and integer between %d and %d: ", min, max);
-        int capture = scanner.nextInt();
-        if (capture >= min && capture <= max) {
-            return capture;
-        } else {
-            return getInt(min, max);
-        }
+         while (true) {
+             System.out.printf("\nEnter and integer between %d and %d: ", min, max);
+             int num;
+             try {
+                 String capture = getString();
+                 num = Integer.parseInt(capture);
+             } catch (RuntimeException re) {
+                 System.err.println("You must enter an integer.");
+                 return getInt(min, max);
+             }
+             if (num >= min && num <= max) {
+                 return num;
+             }
+             System.err.println("Value outside of defined range. Please try again.");
+         }
     }
 
     public int getInt(int min, int max, String prompt) {
-        System.out.print(prompt);
-        int capture = scanner.nextInt();
-        if (capture >= min && capture <= max) {
-            return capture;
-        } else {
-            return getInt(min, max);
+        while (true) {
+            System.out.println(prompt);
+            int num;
+            try {
+                String capture = getString();
+                num = Integer.parseInt(capture);
+            } catch (RuntimeException re) {
+                System.err.println("You must enter an integer.");
+                return getInt(min, max);
+            }
+            if (num >= min && num <= max) {
+                return num;
+            }
+            System.err.println("Value outside of defined range. Please try again.");
         }
     }
 
     public int getInt(String prompt) {
         try {
             System.out.println(prompt);
-            return Integer.valueOf(getString());
+            return Integer.parseInt(getString());
         } catch (NumberFormatException nfe) {
             System.err.println("Invalid input. Please try again.");
             return getInt(prompt);
@@ -70,22 +86,38 @@ public class Input {
     }
 
     public double getDouble(double min, double max) {
-        System.out.printf("\nEnter a number between %f and %f: ", min, max);
-        double capture = scanner.nextDouble();
-        if (capture >= min && capture <= max) {
-            return capture;
-        } else {
-            return getDouble(min, max);
+        while (true) {
+            System.out.printf("\nEnter a double between %s and %s: ", min, max);
+            double num;
+            try {
+                String capture = getString();
+                num = Double.parseDouble(capture);
+            } catch (RuntimeException re) {
+                System.err.println("You must enter a double within the defined range.");
+                return getDouble(min, max);
+            }
+            if (num >= min && num <= max) {
+                return num;
+            }
+            System.err.println("Value outside of defined range. Please try again.");
         }
     }
 
     public double getDouble(double min, double max, String prompt) {
-        System.out.print(prompt);
-        double capture = scanner.nextDouble();
-        if (capture >= min && capture <= max) {
-            return capture;
-        } else {
-            return getDouble(min, max);
+        while (true) {
+            System.out.println(prompt);
+            double num;
+            try {
+                String capture = getString();
+                num = Double.parseDouble(capture);
+            } catch (RuntimeException re) {
+                System.err.println("You must enter a double within the defined range.");
+                return getDouble(min, max, prompt);
+            }
+            if (num >= min && num <= max) {
+                return num;
+            }
+            System.err.println("Value outside of defined range. Please try again.");
         }
     }
 
@@ -96,7 +128,7 @@ public class Input {
     public double getDouble(String prompt) {
         try {
             System.out.println(prompt);
-            return Double.valueOf(getString());
+            return Double.parseDouble(getString());
         } catch (NumberFormatException nfe) {
             System.err.println("Invalid input. Please try again.");
             return getDouble(prompt);
@@ -128,14 +160,13 @@ public class Input {
 
 
         String answer3 = new Input().getString("Enter a number: ");
-        int answerToInt = Integer.valueOf(answer3);
-        System.out.println(Integer.valueOf(Integer.toBinaryString(answerToInt)));
+        int answerToInt = Integer.parseInt(answer3);
         System.out.println("Binary is " + Integer.toBinaryString(answerToInt));
 
 
         String answer4 = new Input().getString("Enter a number: ");
         int answerToInt2 = Integer.valueOf(answer4);
-        System.out.println("Hexadecimal is " + Integer.toHexString(answerToInt2));
+        System.out.println("Hexidecimal is " + Integer.toHexString(answerToInt2));
     }
 
 }
