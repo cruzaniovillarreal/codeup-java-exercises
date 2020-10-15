@@ -55,17 +55,17 @@ public class Input {
         }
     }
 
-    public int getInt() {
+    public int getInt(String prompt) {
         try {
-            return Integer.valueOf(getString("Enter an integer: "));
+            System.out.println(prompt);
+            return Integer.valueOf(getString());
         } catch (NumberFormatException nfe) {
             System.err.println("Invalid input. Please try again.");
-            return getInt();
+            return getInt(prompt);
         }
     }
 
-    public int getInt(String prompt) {
-        System.out.print(prompt);
+    public int getInt() {
         return scanner.nextInt();
     }
 
@@ -90,17 +90,52 @@ public class Input {
     }
 
     public double getDouble() {
-         try {
-             return Double.valueOf(getString("Enter a double: "));
-         } catch (NumberFormatException nfe) {
-             return getDouble();
-
-         }
+        return scanner.nextDouble();
     }
 
     public double getDouble(String prompt) {
-        System.out.print(prompt);
-        return scanner.nextDouble();
+        try {
+            System.out.println(prompt);
+            return Double.valueOf(getString());
+        } catch (NumberFormatException nfe) {
+            System.err.println("Invalid input. Please try again.");
+            return getDouble(prompt);
+        }
+    }
+
+    public static int toBinary(String biString){
+        return Integer.valueOf(biString, 2);
+    }
+
+    public static int toHexDec(String hexString){
+        return Integer.valueOf(hexString, 16);
+    }
+
+    public static String toBinaryString(int i){
+        return Integer.toBinaryString(i);
+    }
+    public static String toHexString(int i) {
+        return Integer.toHexString(i);
+    }
+
+    public static void main(String[] args) {
+
+        String answer1 = new Input().getString("Enter a binary number: ");
+        System.out.println("Your number is: "+toBinary(answer1));
+
+        String answer2 = new Input().getString("Enter a hexidecimal number: ");
+        System.out.println("Your number is: "+toHexDec(answer2));
+
+
+        String answer3 = new Input().getString("Enter a number: ");
+        int answerToInt = Integer.valueOf(answer3);
+        System.out.println(Integer.valueOf(Integer.toBinaryString(answerToInt)));
+        System.out.println("Binary is " + Integer.toBinaryString(answerToInt));
+
+
+        String answer4 = new Input().getString("Enter a number: ");
+        int answerToInt2 = Integer.valueOf(answer4);
+        System.out.println("Hexadecimal is " + Integer.toHexString(answerToInt2));
     }
 
 }

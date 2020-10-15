@@ -29,8 +29,8 @@ public class groceryList {
     }
 
     public static void main(String[] args) {
-        Double hello = new Input().getDouble();
-        System.out.println(hello);
+//        Input hello = new Input();
+//        System.out.println(hello.getDouble("Enter a double: "));
         System.out.println("Welcome to List and Forget!");
         if (new Input().yesNo("Would you like to start a new list? [y/N]")) {
             groceryList newGroceryList = new groceryList();
