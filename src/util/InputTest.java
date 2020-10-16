@@ -10,6 +10,7 @@ public class InputTest {
         System.out.println(newScanner.getInt("Give me an integer: "));
         System.out.println(newScanner.getDouble(10, 20, "Give me a decimal number between 10 and 20: "));
         System.out.println(newScanner.getDouble("Give me a decimal number: "));
+
     }
 
 }
