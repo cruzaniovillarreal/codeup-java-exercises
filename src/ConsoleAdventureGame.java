@@ -26,7 +26,7 @@ public class ConsoleAdventureGame {
     public static String enemyRandomizer(int playerLevel) {
         String enemy = "";
         if (playerLevel % 5 == 0) {
-            int randomNumber = randomizer(20, 35);
+            int randomNumber = randomizer(1, 10);
             switch (randomNumber) {
                 case 1:
                     enemy = "Valik a Titan Prime!";
@@ -174,7 +174,7 @@ public class ConsoleAdventureGame {
         return enemy;
     }
 
-    public static int[] fighter(int playerlife, int enemyHealth, int potionCount) {
+    public static int[] fighter(int playerlife, int enemyHealth, int potionCount, boolean atBossLevel, int playerLevel) {
         Scanner scanner1 = new Scanner(System.in);
         int [] lifeAndPotions = {playerlife, potionCount};
         if (playerlife <= 0) {
@@ -193,23 +193,33 @@ public class ConsoleAdventureGame {
                 System.out.printf("\nYou deal %s damage!\n", attackDamage);
                 enemyHealth -= attackDamage;
                 if (enemyHealth > 0) {
-                    int retaliationDamage = randomizer(1, 15);
+                    int retaliationDamage;
+                    if (atBossLevel) {
+                        retaliationDamage = randomizer(5, 15);
+                    } else {
+                        retaliationDamage = randomizer(1, 5);
+                    }
                     playerHealth -= retaliationDamage;
                     System.out.printf("The enemy retaliates dealing %s damage!\n\n", retaliationDamage);
-                    return fighter(playerHealth, enemyHealth, potionCount);
+                    return fighter(playerHealth, enemyHealth, potionCount, atBossLevel, playerLevel);
                 } else {
-                    return fighter(playerlife, enemyHealth, potionCount);
+                    return fighter(playerlife, enemyHealth, potionCount, atBossLevel, playerLevel);
                 }
             } else if (response.equalsIgnoreCase("D") && potionCount > 0) {
                 int potionsLeft = potionCount--;
                 playerHealth += 15;
-                int retaliationDamage = randomizer(1, 13);
+                int retaliationDamage;
+                if (atBossLevel) {
+                    retaliationDamage = randomizer(5, 15);
+                } else {
+                    retaliationDamage = randomizer(1, 5);
+                }
                 System.out.printf("\nYou drink a potion restoring 15 health.\nThe enemy retaliates dealing %s damage!\n\n", retaliationDamage);
                 playerHealth -= retaliationDamage;
-                return fighter(playerHealth, enemyHealth, potionCount);
+                return fighter(playerHealth, enemyHealth, potionCount, atBossLevel, playerLevel);
             } else if (response.equalsIgnoreCase("D") && potionCount <= 0) {
                 System.out.print(ANSI_RED+"\nNo potions available\n"+ANSI_RESET);
-                return fighter(playerHealth, enemyHealth, potionCount);
+                return fighter(playerHealth, enemyHealth, potionCount, atBossLevel, playerLevel);
             }
             return lifeAndPotions;
         }
@@ -219,22 +229,32 @@ public class ConsoleAdventureGame {
     public static void playerLevels(int life, String name, int killCount, int potionCount, Character player) {
         Character clone = player;
         String enemy = landscapeRandomizer(name, clone.level);
-        int enemyHealth = randomizer(1, 20);
-        int [] lifeAndPotions = fighter(life, enemyHealth, potionCount);
+        boolean atBossLevel;
+        int enemyHealth;
+        if (clone.level % 5 == 0) {
+            atBossLevel = true;
+            enemyHealth = randomizer(30, 45) + clone.level;
+        } else {
+            atBossLevel = false;
+            enemyHealth = randomizer(1, 10) + (clone.level * 2);
+        }
+
+        int [] lifeAndPotions = fighter(life, enemyHealth, potionCount, atBossLevel, clone.level);
         int lifeAfterFight = lifeAndPotions[0];
         int potionsAfterFight = lifeAndPotions[1];
         Scanner scanner = new Scanner(System.in);
         if (lifeAfterFight > 0) {
             clone.potions = potionFinder(potionsAfterFight);
+            clone.kills+=1;
             clone.level+=1;
             System.out.println("Level: "+clone.level);
             System.out.print("\nEnter GO to continue: ");
             String readString = scanner.nextLine();
             if (readString.equalsIgnoreCase("GO")) {
-                playerLevels(lifeAfterFight, name, killCount+1, clone.potions, clone);
+                playerLevels(lifeAfterFight, name, clone.kills, clone.potions, clone);
             }
         } else {
-            System.out.print(ANSI_RED+"You have been killed.\n"+ANSI_RESET);
+            System.out.print(ANSI_RED+"You have been slain!\n"+ANSI_RESET);
             System.out.printf(ANSI_YELLOW+"Enemies Vanquished: %s\n"+ANSI_RESET, killCount);
             System.out.print("Would you like to play again? [y/N]\n");
             if (scanner.nextLine().equalsIgnoreCase("y")) {
