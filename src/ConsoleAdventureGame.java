@@ -1,3 +1,7 @@
+import movies.Movie;
+import movies.MoviesArray;
+import util.Input;
+
 import java.util.Scanner;
 
 public class ConsoleAdventureGame {
@@ -36,7 +40,7 @@ public class ConsoleAdventureGame {
         String enemy = landscapeRandomizer(player.name, player.level);
         boolean atBossLevel;
         int enemyHealth;
-        if (player.level % 5 == 0) {
+        if (player.level % 3 == 0) {
             atBossLevel = true;
             enemyHealth = randomizer(30, 45) + player.level;
         } else {
@@ -47,14 +51,29 @@ public class ConsoleAdventureGame {
         Scanner scanner = new Scanner(System.in);
         if (player.health > 0) {
             Character playerBuffed = PotionsGoldXPKills(player, atBossLevel, enemy);
-            System.out.println("Level: " + playerBuffed.level);
-            System.out.println("Gold: " + playerBuffed.gold);
-            System.out.println("Potions: " + playerBuffed.potions);
-            System.out.println("XP: " + playerBuffed.XP);
-            System.out.print("\nEnter GO to continue: ");
-            String readString = scanner.nextLine();
-            if (readString.equalsIgnoreCase("GO")) {
-                playerLevels(playerBuffed);
+            while(true) {
+                Input scanner1 = new Input();
+                int answer = scanner1.getInt("Quest choices:\n" +
+                        "1. Continue your quest\n" +
+                        "2. Portal to Market\n" +
+                        "3. View your stats\n" +
+                        "Choose your path: ");
+                switch (answer) {
+                    case 1:
+                        playerLevels(playerBuffed);
+                        break;
+                    case 2:
+                        System.out.println("Crystal activated. Teleporting to market.....");
+                        break;
+                    case 3:
+                        String leftAlignFormat = "| %-10s | %-5d | %-11d | %-4d | %-7d | %-8d |%n";
+                        System.out.format("+------------+-------+-------------+------+---------+----------+%n");
+                        System.out.format("|    NAME    | LEVEL | XP TO LEVEL | GOLD | POTIONS | TOTAL XP |%n");
+                        System.out.format("+------------+-------+-------------+------+---------+----------+%n");
+                        System.out.format(leftAlignFormat, playerBuffed.name, playerBuffed.level, ((150 * playerBuffed.level) - playerBuffed.xpToLevel), playerBuffed.gold, playerBuffed.potions, playerBuffed.totalXP);
+                        System.out.format("+------------+-------+-------------+------+---------+----------+%n");
+                        break;
+                }
             }
         } else {
             System.out.print(ANSI_RED + "You have been slain!\n" + ANSI_RESET);
@@ -75,8 +94,8 @@ public class ConsoleAdventureGame {
 
     public static String enemyRandomizer(int playerLevel) {
         String enemy = "";
+        int randomNumber = randomizer(1, 10);
         if (playerLevel % 5 == 0) {
-            int randomNumber = randomizer(1, 10);
             switch (randomNumber) {
                 case 1:
                     enemy = "Valik a Titan Prime!";
@@ -109,9 +128,7 @@ public class ConsoleAdventureGame {
                     enemy = "Jack the Pumpkin King!";
                     break;
             }
-            return enemy;
         } else {
-            int randomNumber = randomizer(1, 10);
             switch (randomNumber) {
                 case 1:
                     enemy = "a zombie!";
@@ -147,8 +164,8 @@ public class ConsoleAdventureGame {
                     enemy = "Nothing";
                     break;
             }
-            return enemy;
         }
+        return enemy;
     }
 
     public static String landscapeRandomizer(String name, int playerLevel) {
@@ -211,7 +228,7 @@ public class ConsoleAdventureGame {
         return enemy;
     }
 
-    public static Character fighter(String enemy, int enemyHealth,  Character player, boolean atBossLevel) {
+    public static Character fighter(String enemy, int enemyHealth, Character player, boolean atBossLevel) {
         Scanner scanner1 = new Scanner(System.in);
         if (player.health <= 0) {
             return player;
@@ -249,7 +266,7 @@ public class ConsoleAdventureGame {
                 } else {
                     retaliationDamage = randomizer(1, 5);
                 }
-                System.out.printf("\nYou drink a potion restoring 15 health.\nThe enemy retaliates dealing %s damage!\n\n", retaliationDamage);
+                System.out.printf("\nYou drink a potion restoring 20 health.\nThe enemy retaliates dealing %s damage!\n\n", retaliationDamage);
                 player.health -= retaliationDamage;
                 return fighter(enemy, enemyHealth, player, atBossLevel);
             } else if (response.equalsIgnoreCase("D") && player.potions <= 0) {
@@ -265,66 +282,42 @@ public class ConsoleAdventureGame {
 
     public static Character PotionsGoldXPKills(Character player, boolean wasBoss, String enemy) {
         player.kills += 1;
+        String potionOut = "";
+        String goldOut = "";
         int potionRoll = randomizer(1, 3);
         if (potionRoll == 2) {
             player.potions += 1;
-            System.out.print(ANSI_GREEN + "The enemy dropped a potion!\n" + ANSI_RESET);
+            potionOut = "Potion found! ";
         } else {
-            System.out.print(ANSI_RED + "No potion was dropped.\n" + ANSI_RESET);
+            potionOut = ANSI_RED + "No potion found" + ANSI_RESET + ". ";
         }
         int xpRoll;
         int goldRoll;
         if (wasBoss) {
-            xpRoll = randomizer(100, 125);
-            player.XP += xpRoll;
+//            xpRoll = randomizer(100, 125);
+            xpRoll = 150 * player.level;
+            player.totalXP += xpRoll;
+            player.xpToLevel += xpRoll;
             goldRoll = randomizer(35, 50);
             player.gold += goldRoll;
-            System.out.print(ANSI_YELLOW + enemy + " dropped " + goldRoll + " gold!\n" + ANSI_RESET);
+            goldOut = ANSI_YELLOW + enemy + ANSI_RESET + " dropped " + goldRoll + " gold!";
         } else {
             xpRoll = randomizer(40, 60);
-            player.XP += xpRoll;
+            player.totalXP += xpRoll;
+            player.xpToLevel += xpRoll;
             goldRoll = randomizer(10, 20);
             player.gold += goldRoll;
-            System.out.print(ANSI_YELLOW + "The enemy dropped " + goldRoll + " gold!\n" + ANSI_RESET);
+            goldOut = "The enemy dropped " + ANSI_YELLOW + goldRoll + " gold!" + ANSI_RESET;
         }
-        System.out.print(ANSI_YELLOW + "Experience Gained: " + xpRoll + " XP!\n" + ANSI_RESET);
+        System.out.println(potionOut + goldOut);
+        System.out.println("Experience Gained: " + ANSI_CYAN + xpRoll + " XP!\n" + ANSI_RESET);
+        if (player.xpToLevel > (150 * player.level)) {
+            System.out.println(player.name + " shivers as a new found power is felt." + ANSI_BLUE + " You Level Up!" + ANSI_RESET);
+            player.xpToLevel -= 150 * player.level;
+            player.level += 1;
+        }
         return player;
     }
-
-//    public static int potionFinder(int potionCounter) {
-//        int randomNumber = randomizer(1, 3);
-//        int foundPotion = potionCounter;
-//        if (randomNumber == 2) {
-//            foundPotion++;
-//            System.out.print(ANSI_GREEN + "The enemy dropped a potion!\n" + ANSI_RESET);
-//        } else {
-//            System.out.print(ANSI_RED + "No potion was dropped.\n" + ANSI_RESET);
-//        }
-//        return foundPotion;
-//    }
-//
-//    public static int goldFinder(int playerGold, boolean wasBoss, String enemy) {
-//        int randomNumber;
-//        if (wasBoss) {
-//            randomNumber = randomizer(35, 50);
-//            System.out.print(ANSI_YELLOW + enemy + " dropped " + randomNumber + " gold!\n" + ANSI_RESET);
-//        } else {
-//            randomNumber = randomizer(10, 20);
-//                System.out.print(ANSI_YELLOW + "The enemy dropped " + randomNumber + " gold!\n" + ANSI_RESET);
-//        }
-//        return playerGold + randomNumber;
-//    }
-//
-//    public static int xpGenerator(int playerXP, boolean wasBoss) {
-//        int randomNumber;
-//        if (wasBoss) {
-//            randomNumber = randomizer(100, 125);
-//        } else {
-//            randomNumber = randomizer(40, 60);
-//        }
-//        System.out.print(ANSI_YELLOW + "Experience Gained: " + randomNumber + " XP!\n" + ANSI_RESET);
-//        return randomNumber;
-//    }
 
     public static void main(String[] args) {
         gameStart();

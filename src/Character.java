@@ -3,7 +3,8 @@ public class Character {
     protected int health;
     protected int potions;
     protected int kills;
-    protected int XP;
+    protected int totalXP;
+    protected int xpToLevel;
     protected int level;
     protected int gold;
     protected int attack;
@@ -17,7 +18,8 @@ public class Character {
         this.kills = 0;
         this.level = 1;
         this.gold = 0;
-        this.XP = 0;
+        this.totalXP = 0;
+        this.xpToLevel = 0;
         this.attack = 1;
         this.defense = 1;
         this.agility = 1;
