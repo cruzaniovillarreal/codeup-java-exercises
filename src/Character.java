@@ -1,6 +1,7 @@
 public class Character {
     protected String name;
     protected int health;
+    protected int healthMax;
     protected int potions;
     protected int kills;
     protected int totalXP;
@@ -11,18 +12,19 @@ public class Character {
     protected int defense;
     protected int agility;
 
-    public Character(String name, int health) {
+    public Character(String name, int health, int potions, int attack, int defense, int agility) {
         this.name = name;
         this.health = health;
-        this.potions = 5;
+        this.healthMax = health;
+        this.potions = potions;
         this.kills = 0;
         this.level = 1;
         this.gold = 0;
         this.totalXP = 0;
         this.xpToLevel = 0;
-        this.attack = 1;
-        this.defense = 1;
-        this.agility = 1;
+        this.attack = attack;
+        this.defense = defense;
+        this.agility = agility;
 
     }
 }

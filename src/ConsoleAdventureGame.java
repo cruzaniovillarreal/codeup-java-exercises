@@ -7,15 +7,15 @@ import java.util.Scanner;
 public class ConsoleAdventureGame {
 
     public static void gameStart() {
-        System.out.println(ANSI_BLUE + "Welcome to Spell-Lunker!" + ANSI_RESET);
+        System.out.println(ANSI_BLUE + "Welcome to Spell-Lunker!\n" + ANSI_RESET);
         System.out.println("Your journey begins as you walk up to the Cave of Lost Dreams. Many brave souls before you, in search of fame and fortune, have attempted to conquer the terror within." +
-                "\nWhile some have lived, none have defeated The Guardians that lie in wait. Can you do what no has done before?" +
-                "\nMake your way through the bowels of the cave, earning XP and gold. You can spend the gold on skill upgrades to give you an edge in combat.");
+                "\nWhile some have lived, none have defeated The Guardians that lie in wait. Can you do what none have done before?" +
+                "\nMake your way through the bowels of the cave, earning XP and gold. You can spend the gold on skill upgrades to give you an edge in combat by portaling to the Market.\n");
         System.out.print("Enter " + ANSI_GREEN + "START" + ANSI_RESET + " to Begin: ");
         Scanner toStart = new Scanner(System.in);
         String response = toStart.nextLine();
         if (response.equalsIgnoreCase("START")) {
-            Character player = new Character(userName(), startingLife());
+            Character player = new Character(userName(), startingLife(), 5, 10, 10, 10);
             System.out.printf("\n" + ANSI_CYAN + "%s enters the eerie cavern with %s HP.\n" + ANSI_RESET, player.name, player.health);
             playerLevels(player);
         } else {
@@ -79,21 +79,74 @@ public class ConsoleAdventureGame {
                     break;
                 case 2:
                     System.out.println("Crystal activated. Teleporting to market.....");
+                    System.out.println("As you enter the shop a ghastly figure appears before you and slowly gestures to the items on the table.");
+                    marketMenu(playerBuffed);
                     questMenu(playerBuffed);
                     break;
                 case 3:
-                    String leftAlignFormat = "| %-10s | %-5d | %-11d | %-4d | %-7d | %-8d |%n";
-                    System.out.format("+------------+-------+-------------+------+---------+----------+%n");
-                    System.out.format("|    NAME    | LEVEL | XP TO LEVEL | GOLD | POTIONS | TOTAL XP |%n");
-                    System.out.format("+------------+-------+-------------+------+---------+----------+%n");
-                    System.out.format(leftAlignFormat, playerBuffed.name, playerBuffed.level, ((150 * playerBuffed.level) - playerBuffed.xpToLevel), playerBuffed.gold, playerBuffed.potions, playerBuffed.totalXP);
-                    System.out.format("+------------+-------+-------------+------+---------+----------+%n");
+                    String leftAlignFormat = "| %-10s | %-5d | %-11d | %-4d | %-7d | %-8d | %-6d | %-7d | %-7d | %-5d | %-6s |%n";
+                    System.out.format("+------------+-------+-------------+------+---------+----------+--------+---------+---------+-------+--------+%n");
+                    System.out.format("|    NAME    | LEVEL | XP TO LEVEL | GOLD | POTIONS | TOTAL XP | ATTACK | DEFENSE | AGILITY | KILLS | HEALTH |%n");
+                    System.out.format("+------------+-------+-------------+------+---------+----------+--------+---------+---------+-------+--------+%n");
+                    System.out.format(leftAlignFormat, playerBuffed.name, playerBuffed.level, ((150 * playerBuffed.level) - playerBuffed.xpToLevel), playerBuffed.gold, playerBuffed.potions, playerBuffed.totalXP, playerBuffed.attack, playerBuffed.defense, playerBuffed.agility, playerBuffed.kills, playerBuffed.health+"/"+playerBuffed.healthMax);
+                    System.out.format("+------------+-------+-------------+------+---------+----------+--------+---------+---------+-------+--------+%n");
                     questMenu(playerBuffed);
                     break;
                 default:
                     questMenu(playerBuffed);
                     break;
             }
+    }
+
+    public static Character marketMenu(Character playerBuffed) {
+        Input scanner1 = new Input();
+        System.out.println("Gold: "+playerBuffed.gold);
+        int answer = scanner1.getInt(1, 5, "Shop choices:\n" +
+                "1. Attack upgrade - 50g \n" +
+                "2. Defense upgrade - 35g \n" +
+                "3. Agility upgrade - 30g \n" +
+                "4. Potion - 20g\n" +
+                "5. Exit\n" +
+                "What would you like to purchase? (Select options 1,2,3,4,5) ");
+        switch (answer) {
+            case 1:
+                if (playerBuffed.gold - 50 < 0) {
+                    System.err.println("You have insufficient gold. The wraith screeches as you try to haggle, strongly rejecting your offer.");
+                } else {
+                    playerBuffed.attack += 10;
+                    playerBuffed.gold -= 50;
+                }
+                return marketMenu(playerBuffed);
+            case 2:
+                if (playerBuffed.gold - 35 < 0) {
+                    System.err.println("You have insufficient gold. The wraith screeches as you try to haggle, strongly rejecting your offer.");
+                } else {
+                    playerBuffed.defense += 10;
+                    playerBuffed.gold -= 35;
+                }
+                return marketMenu(playerBuffed);
+            case 3:
+                if (playerBuffed.gold - 30 < 0) {
+                    System.err.println("You have insufficient gold. The wraith screeches as you try to haggle, strongly rejecting your offer.");
+                } else {
+                    playerBuffed.agility += 10;
+                    playerBuffed.gold -= 30;
+                }
+                return marketMenu(playerBuffed);
+            case 4:
+                if (playerBuffed.gold - 20 < 0) {
+                    System.err.println("You have insufficient gold. The wraith screeches as you try to haggle, strongly rejecting your offer.");
+                } else {
+                    playerBuffed.potions += 1;
+                    playerBuffed.gold -= 20;
+                }
+                return marketMenu(playerBuffed);
+            case 5:
+                System.out.println("The figure disappears into nothing as you turn to leave....");
+                return playerBuffed;
+            default:
+                return marketMenu(playerBuffed);
+        }
     }
 
     public static int randomizer(int min, int max) {
@@ -195,7 +248,7 @@ public class ConsoleAdventureGame {
     public static String enemyRandomizer(int playerLevel) {
         String enemy = "";
         int randomNumber = randomizer(1, 10);
-        if (playerLevel % 5 == 0) {
+        if (playerLevel % 3 == 0) {
             switch (randomNumber) {
                 case 1:
                     enemy = "Valik a Titan Prime!";
