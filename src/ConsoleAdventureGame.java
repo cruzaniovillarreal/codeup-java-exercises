@@ -259,7 +259,7 @@ public class ConsoleAdventureGame {
                     enemy = "Valik a Titan Prime";
                     break;
                 case 2:
-                    enemy = "Scorn the Minotaur Warlord";
+                    enemy = "Scorn The Minotaur Warlord";
                     break;
                 case 3:
                     enemy = "THE BigFoot";
@@ -277,10 +277,10 @@ public class ConsoleAdventureGame {
                     enemy = "Inferno The Ancient Dragon";
                     break;
                 case 8:
-                    enemy = "Grime, the Impeccable";
+                    enemy = "Grime, The Impeccable";
                     break;
                 case 9:
-                    enemy = "the guardian Cerberus";
+                    enemy = "Malkov, The Shapeshifter";
                     break;
                 case 10:
                     enemy = "Jack the Pumpkin King";
@@ -336,62 +336,31 @@ public class ConsoleAdventureGame {
                 System.out.println("\nYou come upon 2 tunnel entrances...");
                 System.out.println("Would you like to go left or right? [left/right]");
                 playerChoice = choice.nextLine();
-                if (player.level % 3 == 0) {
-                    System.out.println("\nYou encounter " + colorRandomizer()+enemy+ANSI_RESET+"!");
-                } else {
-                    System.out.println("\nYou encounter " + enemy);
-                }
-
                 break;
             case 2:
                 System.out.println("\nYou pass a locked stone door, but luckily you have magic pocket fuzz...");
                 System.out.println("Would you like to pick the lock? [y/N]");
                 playerChoice = choice.nextLine();
-                if (player.level % 3 == 0) {
-                    System.out.println("\nYou encounter " + colorRandomizer()+enemy+ANSI_RESET+"!");
-                } else {
-                    System.out.println("\nYou encounter " + enemy);
-                }
                 break;
             case 3:
                 System.out.println("\nYou hear whispering escaping from a crack just big enough to squeeze through...");
                 System.out.println("Investigate? [y/N]");
                 playerChoice = choice.nextLine();
-                if (player.level % 3 == 0) {
-                    System.out.println("\nYou encounter " + colorRandomizer()+enemy+ANSI_RESET+"!");
-                } else {
-                    System.out.println("\nYou encounter " + enemy);
-                }
                 break;
             case 4:
                 System.out.println("\nThe walls tremble as someone cries out \"" + player.name.toUpperCase() + "\"!");
                 System.out.println("Hurry to their aid? [y/N]");
                 playerChoice = choice.nextLine();
-                if (player.level % 3 == 0) {
-                    System.out.println("\nYou encounter " + colorRandomizer()+enemy+ANSI_RESET+"!");
-                } else {
-                    System.out.println("\nYou encounter " + enemy);
-                }
                 break;
             case 5:
                 System.out.println("\nAs you continue to walk you sense you're not alone...");
                 System.out.println("Cast a spell to see what's there? [y/N]");
                 playerChoice = choice.nextLine();
-                if (player.level % 3 == 0) {
-                    System.out.println("\nYou encounter " + colorRandomizer()+enemy+ANSI_RESET+"!");
-                } else {
-                    System.out.println("\nYou encounter " + enemy);
-                }
                 break;
             case 6:
                 System.out.println("\nA small ball of light whips past you, illuminating a small passage.");
                 System.out.println("Follow your new found friend? [y/N]");
                 playerChoice = choice.nextLine();
-                if (player.level % 3 == 0) {
-                    System.out.println("\nYou encounter " + colorRandomizer()+enemy+ANSI_RESET+"!");
-                } else {
-                    System.out.println("\nYou encounter " + enemy);
-                }
                 break;
             case 7:
                 System.out.println("\nYou stumble upon a large body of water with a boat sitting on shore.\nThere's something glowing on the island in the center of the lake... ");
@@ -399,14 +368,16 @@ public class ConsoleAdventureGame {
                 playerChoice = choice.nextLine();
                 if (playerChoice.equalsIgnoreCase("y")) {
                     enemy = "watery " + enemy;
-                    System.out.println("\nYou encounter a " + enemy);
-                } else {
-                    System.out.println("\nYou encounter " + enemy);
                 }
                 break;
             default:
                 playerChoice = "Nothing";
                 break;
+        }
+        if (player.level % 2 == 0) {
+            System.out.println("\nYou encounter " + colorRandomizer()+enemy+ANSI_RESET+"!");
+        } else {
+            System.out.println("\nYou encounter " + enemy);
         }
         return enemy;
     }
