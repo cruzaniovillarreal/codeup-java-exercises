@@ -37,7 +37,7 @@ public class Input {
 
     public int getInt(int min, int max) {
          while (true) {
-             System.out.printf("\nEnter and integer between %d and %d: ", min, max);
+             System.out.printf("\nEnter an integer between %d and %d: ", min, max);
              int num;
              try {
                  String capture = getString();
