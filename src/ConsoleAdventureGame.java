@@ -252,14 +252,14 @@ public class ConsoleAdventureGame {
 
     public static String enemyRandomizer(int playerLevel) {
         String enemy = "";
-        int randomNumber = randomizer(1, 10);
+        int randomNumber = randomizer(1, 14);
         if (playerLevel % 2 == 0) {
             switch (randomNumber) {
                 case 1:
-                    enemy = "Valik a Titan Prime";
+                    enemy = "Valik, The Titan Prime";
                     break;
                 case 2:
-                    enemy = "Scorn The Minotaur Warlord";
+                    enemy = "Scorn, The Minotaur Warlord";
                     break;
                 case 3:
                     enemy = "THE BigFoot";
@@ -271,7 +271,7 @@ public class ConsoleAdventureGame {
                     enemy = "the Lich King DreamEater";
                     break;
                 case 6:
-                    enemy = "Xilon The Undead Kraken";
+                    enemy = "Xilon, The Undead Kraken";
                     break;
                 case 7:
                     enemy = "Inferno The Ancient Dragon";
@@ -284,6 +284,18 @@ public class ConsoleAdventureGame {
                     break;
                 case 10:
                     enemy = "Jack the Pumpkin King";
+                    break;
+                case 11:
+                    enemy = "Malnir, The Exiled King";
+                    break;
+                case 12:
+                    enemy = "Varkliv, The Defiler";
+                    break;
+                case 13:
+                    enemy = "Suzo, The BladeMaster";
+                    break;
+                case 14:
+                    enemy = "Talon, The Phoenix";
                     break;
             }
         } else {
@@ -317,6 +329,21 @@ public class ConsoleAdventureGame {
                     break;
                 case 10:
                     enemy = "a poor old man!";
+                    break;
+                case 11:
+                    enemy = "a hellhound!";
+                    break;
+                case 12:
+                    enemy = "a draugr!";
+                    break;
+                case 13:
+                    enemy = "a morphed leech!";
+                    break;
+                case 14:
+                    enemy = "a goblin!";
+                    break;
+                case 15:
+                    enemy = "a cursed beggar!";
                     break;
                 default:
                     enemy = "Nothing";
