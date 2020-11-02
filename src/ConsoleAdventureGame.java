@@ -252,7 +252,7 @@ public class ConsoleAdventureGame {
 
     public static String enemyRandomizer(int playerLevel) {
         String enemy = "";
-        int randomNumber = randomizer(1, 14);
+        int randomNumber = randomizer(1, 15);
         if (playerLevel % 2 == 0) {
             switch (randomNumber) {
                 case 1:
@@ -296,6 +296,9 @@ public class ConsoleAdventureGame {
                     break;
                 case 14:
                     enemy = "Talon, The Phoenix";
+                    break;
+                case 15:
+                    enemy = "Carvos, The Torturer";
                     break;
             }
         } else {
@@ -355,7 +358,7 @@ public class ConsoleAdventureGame {
 
     public static String landscapeRandomizer(Character player) {
         Scanner choice = new Scanner(System.in);
-        int randomLand = randomizer(1, 6);
+        int randomLand = randomizer(1, 10);
         String playerChoice;
         String enemy = enemyRandomizer(player.level);
         switch (randomLand) {
@@ -393,9 +396,24 @@ public class ConsoleAdventureGame {
                 System.out.println("\nYou stumble upon a large body of water with a boat sitting on shore.\nThere's something glowing on the island in the center of the lake... ");
                 System.out.println("Would you like to take the boat and check out the mysterious light? [y/N]");
                 playerChoice = choice.nextLine();
-                if (playerChoice.equalsIgnoreCase("y")) {
-                    enemy = "watery " + enemy;
-                }
+//                if (playerChoice.equalsIgnoreCase("y")) {
+//                    enemy = "watery " + enemy;
+//                }
+                break;
+            case 8:
+                System.out.println("\nYou stumble and grab the wall to steady yourself, your hand sinks into the stone and the wall splits to your left. A stairwell is revealed...");
+                System.out.println("Take the uncovered passage? [y/N]");
+                playerChoice = choice.nextLine();
+                break;
+            case 9:
+                System.out.println("\nYour mind wanders as the path continues, a warm voice beckons you to stray into the darkness.\n");
+                System.out.println("Resist against the voice? [y/N]");
+                playerChoice = choice.nextLine();
+                break;
+            case 10:
+                System.out.println("\nYou stiffen as you hear footsteps rush toward you from behind.");
+                System.out.println("Turn around to see what's there? [y/N]");
+                playerChoice = choice.nextLine();
                 break;
             default:
                 playerChoice = "Nothing";
