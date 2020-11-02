@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Game {
     JFrame window;
@@ -12,8 +14,14 @@ public class Game {
     JLabel titleNameLabel3;
     JPanel startButtonPanel;
     JButton startButton;
+    JPanel mainTextPanel;
+    JTextArea mainTextArea1;
+    JTextArea mainTextArea2;
+    JTextField playerName;
+    TitleScreenHandler tsHandler = new TitleScreenHandler();
     Font titleFont = new Font("Times New Roman", Font.PLAIN, 70);
     Font buttonFont = new Font("Times New Roman", Font.PLAIN, 40);
+    Font textFont = new Font("Times New Roman", Font.PLAIN, 30);
 
     public Game() {
         window = new JFrame("Spell-Lunker");
@@ -61,6 +69,7 @@ public class Game {
         startButton.setBorderPainted(false);
         startButton.setFont(buttonFont);
         startButtonPanel.add(startButton);
+        startButton.addActionListener(tsHandler);
 
 
         con.add(titleNamePanel1);
@@ -70,6 +79,53 @@ public class Game {
         window.setVisible(true);
 
     }
+
+    public void createGameScreen() {
+        titleNamePanel1.setVisible(false);
+        titleNamePanel2.setVisible(false);
+        titleNamePanel3.setVisible(false);
+        startButtonPanel.setVisible(false);
+
+        mainTextPanel = new JPanel();
+        mainTextPanel.setBounds(100, 100, 600, 250);
+        mainTextPanel.setBackground(Color.blue);
+        con.add(mainTextPanel);
+
+//        playerName = new JTextField(20);
+//        mainTextArea.setBounds(100, 300, 300, 250);
+//        mainTextArea.setBackground(Color.BLACK);
+//        mainTextArea.setForeground(Color.white);
+//        mainTextPanel.add(playerName);
+
+        mainTextArea1 = new JTextArea("Enter Hero Name: ");
+        mainTextArea1.setBounds(100, 100, 600, 250);
+        mainTextArea1.setBackground(Color.BLACK);
+        mainTextArea1.setForeground(Color.white);
+        mainTextArea1.setEditable(false);
+        mainTextArea1.setFont(textFont);
+        mainTextArea1.setLineWrap(true);
+        mainTextPanel.add(mainTextArea1);
+
+        mainTextArea2 = new JTextArea("Select starting HP: ");
+        mainTextArea2.setBounds(100, 200, 600, 250);
+        mainTextArea2.setBackground(Color.BLACK);
+        mainTextArea2.setForeground(Color.white);
+        mainTextArea2.setEditable(false);
+        mainTextArea2.setFont(textFont);
+        mainTextArea2.setLineWrap(true);
+        mainTextPanel.add(mainTextArea2);
+
+
+
+    }
+
+    public class TitleScreenHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            createGameScreen();
+        }
+    }
+
 
     public static void main(String[] args) {
         new Game();
