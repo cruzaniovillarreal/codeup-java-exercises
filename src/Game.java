@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Game {
+public class Game extends JPanel {
     JFrame window;
     Container con;
     JPanel titleNamePanel1;
@@ -14,17 +14,30 @@ public class Game {
     JLabel titleNameLabel3;
     JPanel startButtonPanel;
     JButton startButton;
-    JPanel mainTextPanel;
-    JTextArea mainTextArea1;
-    JTextArea mainTextArea2;
+    JPanel nextButtonPanel;
+    JPanel heroTextPanel1;
+    JPanel heroTextPanel2;
+    JPanel heroTextPanel3;
+    JLabel heroTextLabel;
+    JTextArea heroTextArea1;
+    JTextArea heroTextArea2;
     JTextField playerName;
+    JButton nextButton;
     TitleScreenHandler tsHandler = new TitleScreenHandler();
     Font titleFont = new Font("Times New Roman", Font.PLAIN, 70);
     Font buttonFont = new Font("Times New Roman", Font.PLAIN, 40);
     Font textFont = new Font("Times New Roman", Font.PLAIN, 30);
+    Image backgroundImg = Toolkit.getDefaultToolkit().getImage("/img/titleImage.jpg");
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(backgroundImg, 0, 0, null);
+    }
+
 
     public Game() {
-        window = new JFrame("Spell-Lunker");
+        window = new JFrame();
         window.setSize(800, 600);
         window.setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
         window.getContentPane().setBackground(Color.black);
@@ -34,6 +47,7 @@ public class Game {
         titleNamePanel1 = new JPanel();
         titleNamePanel1.setBounds(100,75,600,100);
         titleNamePanel1.setBackground(Color.black);
+
 
         titleNameLabel1 = new JLabel("WELCOME");
         titleNameLabel1.setForeground(Color.white);
@@ -80,49 +94,76 @@ public class Game {
 
     }
 
-    public void createGameScreen() {
+    public void createHeroScreen() {
         titleNamePanel1.setVisible(false);
         titleNamePanel2.setVisible(false);
         titleNamePanel3.setVisible(false);
         startButtonPanel.setVisible(false);
 
-        mainTextPanel = new JPanel();
-        mainTextPanel.setBounds(100, 100, 600, 250);
-        mainTextPanel.setBackground(Color.blue);
-        con.add(mainTextPanel);
 
-//        playerName = new JTextField(20);
-//        mainTextArea.setBounds(100, 300, 300, 250);
-//        mainTextArea.setBackground(Color.BLACK);
-//        mainTextArea.setForeground(Color.white);
-//        mainTextPanel.add(playerName);
 
-        mainTextArea1 = new JTextArea("Enter Hero Name: ");
-        mainTextArea1.setBounds(100, 100, 600, 250);
-        mainTextArea1.setBackground(Color.BLACK);
-        mainTextArea1.setForeground(Color.white);
-        mainTextArea1.setEditable(false);
-        mainTextArea1.setFont(textFont);
-        mainTextArea1.setLineWrap(true);
-        mainTextPanel.add(mainTextArea1);
+        heroTextPanel1 = new JPanel();
+        heroTextPanel1.setBounds(100, 50, 600, 100);
+        heroTextPanel1.setBackground(Color.black);
 
-        mainTextArea2 = new JTextArea("Select starting HP: ");
-        mainTextArea2.setBounds(100, 200, 600, 250);
-        mainTextArea2.setBackground(Color.BLACK);
-        mainTextArea2.setForeground(Color.white);
-        mainTextArea2.setEditable(false);
-        mainTextArea2.setFont(textFont);
-        mainTextArea2.setLineWrap(true);
-        mainTextPanel.add(mainTextArea2);
+        heroTextPanel2 = new JPanel();
+        heroTextPanel2.setBounds(100, 250, 600, 50);
+        heroTextPanel2.setBackground(Color.black);
+
+        heroTextPanel3 = new JPanel();
+        heroTextPanel3.setBounds(100, 320, 600, 50);
+        heroTextPanel3.setBackground(Color.black);
+
+        nextButtonPanel = new JPanel();
+        nextButtonPanel.setBounds(300, 450, 200, 100);
+        nextButtonPanel.setBackground(Color.black);
 
 
 
+        heroTextLabel = new JLabel("Your Hero");
+        heroTextLabel.setBackground(Color.black);
+        heroTextLabel.setForeground(Color.white);
+        heroTextLabel.setFont(titleFont);
+        heroTextPanel1.add(heroTextLabel);
+
+        heroTextArea1 = new JTextArea("Enter Hero Name: ");
+        heroTextArea1.setBounds(100, 450, 400, 250);
+        heroTextArea1.setBackground(Color.black);
+        heroTextArea1.setForeground(Color.white);
+        heroTextArea1.setEditable(false);
+        heroTextArea1.setFont(textFont);
+        heroTextArea1.setLineWrap(true);
+        heroTextPanel2.add(heroTextArea1);
+
+        heroTextArea2 = new JTextArea("Select starting HP: ");
+        heroTextArea2.setBounds(100, 650, 400, 250);
+        heroTextArea2.setBackground(Color.black);
+        heroTextArea2.setForeground(Color.white);
+        heroTextArea2.setEditable(false);
+        heroTextArea2.setFont(textFont);
+        heroTextArea2.setLineWrap(true);
+        heroTextPanel3.add(heroTextArea2);
+
+        nextButton = new JButton("Continue");
+        nextButton.setBackground(Color.black);
+        nextButton.setForeground(Color.white);
+        nextButton.setOpaque(true);
+        nextButton.setBorderPainted(false);
+        nextButton.setFont(buttonFont);
+        nextButtonPanel.add(nextButton);
+        nextButton.addActionListener(tsHandler);
+
+        con.add(heroTextPanel1);
+        con.add(heroTextPanel2);
+        con.add(heroTextPanel3);
+        con.add(nextButtonPanel);
+        window.setVisible(true);
     }
 
     public class TitleScreenHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            createGameScreen();
+            createHeroScreen();
         }
     }
 
