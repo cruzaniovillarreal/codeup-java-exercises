@@ -242,9 +242,11 @@ public class ConsoleAdventureGame {
             goldOut = "The enemy dropped " + ANSI_YELLOW + goldRoll + " gold" + ANSI_RESET+"!";
         }
         System.out.println("\n"+potionOut + goldOut + " Experience Gained: " + ANSI_CYAN + xpRoll + " XP" + ANSI_RESET +"!\n");
-        if (player.xpToLevel > (150 * player.level)) {
+        if (player.xpToLevel > (100 * player.level)) {
             System.out.println(player.name + " shivers as a new found power is felt." + ANSI_BLUE + " You Level Up!\n" + ANSI_RESET);
-            player.xpToLevel -= 150 * player.level;
+            player.healthMax += 10;
+            player.health = player.healthMax;
+            player.xpToLevel -= 100 * player.level;
             player.level += 1;
         }
         return player;
