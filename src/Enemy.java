@@ -1,10 +1,27 @@
 public class Enemy {
+    private String name;
     private int health;
     private int maxHealth;
     private int heal;
     private int attack;
     private int defense;
     private int damage;
+    boolean boss = false;
+
+    public Enemy(String name, int maxHealth, int heal, int attack, int defense, int damage, boolean isBoss) {
+        this.name = name;
+        this.health = maxHealth;
+        this.maxHealth = maxHealth;
+        this.heal = heal;
+        this.attack = attack;
+        this.defense = defense;
+        this.damage = damage;
+        this.boss = isBoss;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     public int getHealth() {
         return health;
@@ -30,6 +47,10 @@ public class Enemy {
         return damage;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setHealth(int health) {
         this.health = health;
     }
@@ -52,5 +73,9 @@ public class Enemy {
 
     public void setDamage(int damage) {
         this.damage = damage;
+    }
+
+    public void heal() {
+        this.health += this.heal;
     }
 }

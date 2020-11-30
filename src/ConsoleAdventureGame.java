@@ -38,7 +38,7 @@ public class ConsoleAdventureGame {
     }
 
     public static void playerLevels(Character player) {
-        String enemy = landscapeRandomizer(player);
+//        String enemy = landscapeRandomizer(player);
         boolean atBossLevel;
         int enemyHealth;
         if (player.level % 2 == 0) {
@@ -48,6 +48,7 @@ public class ConsoleAdventureGame {
             atBossLevel = false;
             enemyHealth = randomizer(10, 20) + (player.level * 2);
         }
+        Enemy enemy = new Enemy(landscapeRandomizer(player), enemyHealth, 10, 10, 10, 10, atBossLevel);
         player = fighter(enemy, enemyHealth, player, atBossLevel);
         Scanner scanner = new Scanner(System.in);
         if (player.health > 0) {
