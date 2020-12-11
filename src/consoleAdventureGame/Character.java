@@ -1,8 +1,11 @@
+package consoleAdventureGame;
+
 public class Character {
     protected String name;
     protected int health;
     protected int healthMax;
     protected int potions;
+    protected int surgePotions;
     protected int kills;
     protected int totalXP;
     protected int xpToLevel;
