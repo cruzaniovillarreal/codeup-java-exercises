@@ -1,5 +1,5 @@
-import movies.Movie;
-import movies.MoviesArray;
+package consoleAdventureGame;
+
 import util.Input;
 
 import java.util.Scanner;
@@ -38,32 +38,38 @@ public class ConsoleAdventureGame {
     }
 
     public static void playerLevels(Character player) {
-//        String enemy = landscapeRandomizer(player);
-        boolean atBossLevel;
-        int enemyHealth;
-        if (player.level % 2 == 0) {
-            atBossLevel = true;
-            enemyHealth = randomizer(15, 20) * player.level;
+        String enemy = landscapeRandomizer(player);
+        if (enemy.equalsIgnoreCase("No Enemy")) {
+            lootGenerator(player);
+            questMenu(player);
         } else {
-            atBossLevel = false;
-            enemyHealth = randomizer(10, 20) + (player.level * 2);
-        }
-        Enemy enemy = new Enemy(landscapeRandomizer(player), enemyHealth, 10, 10, 10, 10, atBossLevel);
-        player = fighter(enemy, player);
-        Scanner scanner = new Scanner(System.in);
-        if (player.health > 0) {
-            Character playerBuffed = PotionsGoldXPKills(player, enemy);
-            questMenu(playerBuffed);
-        } else {
-            System.out.print(ANSI_RED + "You have been slain!\n" + ANSI_RESET);
-            System.out.printf(ANSI_YELLOW + "Enemies Vanquished: %s\n" + ANSI_RESET, player.kills);
-            System.out.print("Would you like to play again? [y/N]\n");
-            if (scanner.nextLine().equalsIgnoreCase("y")) {
-                gameStart();
+            boolean atBossLevel;
+            int enemyHealth;
+            if (player.level % 2 == 0) {
+                atBossLevel = true;
+                enemyHealth = randomizer(15, 20) * player.level;
             } else {
-                System.out.print("Game Over. Seriously.");
+                atBossLevel = false;
+                enemyHealth = randomizer(10, 20) + (player.level * 2);
+            }
+            Enemy enemyToFight = new Enemy(enemy, enemyHealth, 10, 10, 10, 10, atBossLevel);
+            player = fighter(enemyToFight, player);
+            Scanner scanner = new Scanner(System.in);
+            if (player.health > 0) {
+                Character playerBuffed = PotionsGoldXPKills(player, enemyToFight);
+                questMenu(playerBuffed);
+            } else {
+                System.out.print(ANSI_RED + "You have been slain!\n" + ANSI_RESET);
+                System.out.printf(ANSI_YELLOW + "Enemies Vanquished: %s\n" + ANSI_RESET, player.kills);
+                System.out.print("Would you like to play again? [y/N]\n");
+                if (scanner.nextLine().equalsIgnoreCase("y")) {
+                    gameStart();
+                } else {
+                    System.out.print("Game Over. Seriously.");
+                }
             }
         }
+
     }
     public static void questMenu(Character playerBuffed) {
             Input scanner1 = new Input();
@@ -78,7 +84,7 @@ public class ConsoleAdventureGame {
                     break;
                 case 2:
                     System.out.println("\nCrystal activated. Teleporting to market.....\n");
-                    System.out.println("As you enter the shop a ghastly figure appears before you and slowly gestures to the items on the table.\n");
+                    System.out.println("As you enter the shop a ghastly figure appears before you and slowly gestures to the items on the table.");
                     marketMenu(playerBuffed);
                     questMenu(playerBuffed);
                     break;
@@ -231,7 +237,7 @@ public class ConsoleAdventureGame {
             player.xpToLevel += xpRoll;
             goldRoll = randomizer(35, 50);
             player.gold += goldRoll;
-            goldOut = ANSI_YELLOW + enemy + ANSI_RESET + " dropped " + ANSI_YELLOW + goldRoll + " gold!" + ANSI_RESET;
+            goldOut = ANSI_YELLOW + enemy.getName() + ANSI_RESET + " dropped " + ANSI_YELLOW + goldRoll + " gold!" + ANSI_RESET;
         } else {
             xpRoll = randomizer(50, 65);
             player.totalXP += xpRoll;
@@ -359,9 +365,9 @@ public class ConsoleAdventureGame {
 
     public static String landscapeRandomizer(Character player) {
         Scanner choice = new Scanner(System.in);
+        int encounter = randomizer(1, 2);
         int randomLand = randomizer(1, 10);
         String playerChoice;
-        String enemy = enemyRandomizer(player.level);
         switch (randomLand) {
             case 1:
                 System.out.println("\nYou come upon 2 tunnel entrances...");
@@ -412,7 +418,7 @@ public class ConsoleAdventureGame {
                 playerChoice = choice.nextLine();
                 break;
             case 10:
-                System.out.println("\nYou stiffen as you hear footsteps rush toward you from behind.");
+                System.out.println("\nYou stiffen as you hear something rush towards you from behind.");
                 System.out.println("Turn around to see what's there? [y/N]");
                 playerChoice = choice.nextLine();
                 break;
@@ -420,12 +426,53 @@ public class ConsoleAdventureGame {
                 playerChoice = "Nothing";
                 break;
         }
-        if (player.level % 2 == 0) {
-            System.out.println("\nYou encounter " + colorRandomizer()+enemy+ANSI_RESET+"!");
+        if (encounter == 1) {
+            String enemy = enemyRandomizer(player.level);
+            if (player.level % 2 == 0) {
+                System.out.println("\nYou encounter " + colorRandomizer()+enemy+ANSI_RESET+"!");
+            } else {
+                System.out.println("\nYou encounter " + enemy);
+            }
+            return enemy;
         } else {
-            System.out.println("\nYou encounter " + enemy);
+            return "No Enemy";
         }
-        return enemy;
+
+    }
+
+    public static Character lootGenerator(Character player) {
+        int randomNumber = randomizer(1, 5);
+        int randomGold = randomizer(5, 20);
+        int randomXP = randomizer(10, 35);
+        switch (randomNumber) {
+            case 1:
+                System.out.println("\nSurge Potion Found!\n");
+                player.surgePotions += 1;
+                break;
+            case 2:
+                System.out.println("\nYou found "+randomGold+" gold!\n");
+                break;
+            case 3:
+                System.out.println("\nYou continue on your quests unperturbed.\n");
+                break;
+            case 4:
+                System.out.println("\nSomething quickly skitters across the ground as you feel something around you waist. The creature vanishes before you can see what it is.\n");
+                if (player.potions == 0) {
+                    System.out.println("You check your belongings, nothing seems to be missing...\n");
+                } else {
+                    System.out.println("Checking your health potions you notice one has been stolen!\n");
+                }
+                player.potions -= 1;
+                break;
+            case 5:
+                System.out.println("\nYou find a Knowledge Crystal! You gained "+randomXP+" XP!\n");
+                player.xpToLevel += randomXP;
+                break;
+            default:
+                break;
+        }
+        return player;
+
     }
 
     public static String colorRandomizer() {
