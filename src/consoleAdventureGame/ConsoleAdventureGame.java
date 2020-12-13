@@ -16,7 +16,7 @@ public class ConsoleAdventureGame {
         String response = toStart.nextLine();
         if (response.equalsIgnoreCase("START")) {
             Character player = new Character(userName(), startingLife(), 5, 10, 10, 10);
-            System.out.printf("\n" + ANSI_CYAN + "%s enters the eerie cavern with %s HP armed with 5 potions and a spell to teleport to the closest Market.\n" + ANSI_RESET, player.name, player.health);
+            System.out.printf("\n" + ANSI_CYAN + "%s enters the eerie cavern with %s HP armed with 5 potions and a spell to teleport to the closest Market.\n" + ANSI_RESET, player.getName(), player.getHealth());
             playerLevels(player);
         } else {
             gameStart();
@@ -45,22 +45,22 @@ public class ConsoleAdventureGame {
         } else {
             boolean atBossLevel;
             int enemyHealth;
-            if (player.level % 2 == 0) {
+            if (player.getLevel() % 2 == 0) {
                 atBossLevel = true;
-                enemyHealth = randomizer(15, 20) * player.level;
+                enemyHealth = randomizer(15, 20) * player.getLevel();
             } else {
                 atBossLevel = false;
-                enemyHealth = randomizer(10, 20) + (player.level * 2);
+                enemyHealth = randomizer(10, 20) + (player.getLevel() * 2);
             }
             Enemy enemyToFight = new Enemy(enemy, enemyHealth, 10, 10, 10, 10, atBossLevel);
             player = fighter(enemyToFight, player);
             Scanner scanner = new Scanner(System.in);
-            if (player.health > 0) {
+            if (player.getHealth() > 0) {
                 Character playerBuffed = PotionsGoldXPKills(player, enemyToFight);
                 questMenu(playerBuffed);
             } else {
                 System.out.print(ANSI_RED + "You have been slain!\n" + ANSI_RESET);
-                System.out.printf(ANSI_YELLOW + "Enemies Vanquished: %s\n" + ANSI_RESET, player.kills);
+                System.out.printf(ANSI_YELLOW + "Enemies Vanquished: %s\n" + ANSI_RESET, player.getKills());
                 System.out.print("Would you like to play again? [y/N]\n");
                 if (scanner.nextLine().equalsIgnoreCase("y")) {
                     gameStart();
@@ -93,7 +93,7 @@ public class ConsoleAdventureGame {
                     System.out.format("+------------+-------+-------------+------+---------+----------+--------+---------+---------+-------+--------+%n");
                     System.out.format("|    NAME    | LEVEL | XP TO LEVEL | GOLD | POTIONS | TOTAL XP | ATTACK | DEFENSE | AGILITY | KILLS | HEALTH |%n");
                     System.out.format("+------------+-------+-------------+------+---------+----------+--------+---------+---------+-------+--------+%n");
-                    System.out.format(leftAlignFormat, playerBuffed.name, playerBuffed.level, ((150 * playerBuffed.level) - playerBuffed.xpToLevel), playerBuffed.gold, playerBuffed.potions, playerBuffed.totalXP, playerBuffed.attack, playerBuffed.defense, playerBuffed.agility, playerBuffed.kills, playerBuffed.health+"/"+playerBuffed.healthMax);
+                    System.out.format(leftAlignFormat, playerBuffed.getName(), playerBuffed.getLevel(), ((150 * playerBuffed.getLevel()) - playerBuffed.getXpToLevel()), playerBuffed.getGold(), playerBuffed.getPotions(), playerBuffed.getTotalXP(), playerBuffed.getAttack(), playerBuffed.getDefense(), playerBuffed.getAgility(), playerBuffed.getKills(), playerBuffed.getHealth()+"/"+playerBuffed.getHealthMax());
                     System.out.format("+------------+-------+-------------+------+---------+----------+--------+---------+---------+-------+--------+%n");
                     questMenu(playerBuffed);
                     break;
@@ -105,7 +105,7 @@ public class ConsoleAdventureGame {
 
     public static Character marketMenu(Character playerBuffed) {
         Input scanner1 = new Input();
-        System.out.println("\nGold: "+playerBuffed.gold);
+        System.out.println("\nGold: "+playerBuffed.getGold());
         int answer = scanner1.getInt(1, 5, "Shop choices:\n" +
                 "1. Attack upgrade - 50g \n" +
                 "2. Defense upgrade - 35g \n" +
@@ -115,42 +115,42 @@ public class ConsoleAdventureGame {
                 "What would you like to purchase? (Select options 1,2,3,4,5) ");
         switch (answer) {
             case 1:
-                if (playerBuffed.gold - 50 < 0) {
+                if (playerBuffed.getGold() - 50 < 0) {
                     System.err.println("You have insufficient gold. The wraith screeches as you try to haggle, strongly rejecting your offer.");
                 } else {
                     if (new Input().yesNo("Purchase attack upgrade? [y/N]")) {
-                        playerBuffed.attack += 10;
-                        playerBuffed.gold -= 50;
+                        playerBuffed.setAttack(playerBuffed.getAttack() + 10);
+                        playerBuffed.setGold(playerBuffed.getGold() - 50);
                     }
                 }
                 return marketMenu(playerBuffed);
             case 2:
-                if (playerBuffed.gold - 35 < 0) {
+                if (playerBuffed.getGold() - 35 < 0) {
                     System.err.println("You have insufficient gold. The wraith screeches as you try to haggle, strongly rejecting your offer.");
                 } else {
                     if (new Input().yesNo("Purchase defense upgrade? [y/N]")) {
-                        playerBuffed.defense += 10;
-                        playerBuffed.gold -= 35;
+                        playerBuffed.setDefense(playerBuffed.getDefense() + 10);
+                        playerBuffed.setGold(playerBuffed.getGold() - 35);
                     }
                 }
                 return marketMenu(playerBuffed);
             case 3:
-                if (playerBuffed.gold - 30 < 0) {
+                if (playerBuffed.getGold() - 30 < 0) {
                     System.err.println("You have insufficient gold. The wraith screeches as you try to haggle, strongly rejecting your offer.");
                 } else {
                     if (new Input().yesNo("Purchase agility upgrade? [y/N]")) {
-                        playerBuffed.agility += 10;
-                        playerBuffed.gold -= 30;
+                        playerBuffed.setAgility(playerBuffed.getAgility() + 10);
+                        playerBuffed.setGold(playerBuffed.getGold() - 30);
                     }
                 }
                 return marketMenu(playerBuffed);
             case 4:
-                if (playerBuffed.gold - 20 < 0) {
+                if (playerBuffed.getGold() - 20 < 0) {
                     System.err.println("You have insufficient gold. The wraith screeches as you try to haggle, strongly rejecting your offer.");
                 } else {
                     if (new Input().yesNo("Purchase potion? [y/N]")) {
-                        playerBuffed.potions += 1;
-                        playerBuffed.gold -= 20;
+                        playerBuffed.setPotions(playerBuffed.getPotions() + 1);
+                        playerBuffed.setGold(playerBuffed.getGold() - 20);
                     }
                 }
                 return marketMenu(playerBuffed);
@@ -169,44 +169,44 @@ public class ConsoleAdventureGame {
 
     public static Character fighter(Enemy enemy, Character player) {
         Scanner scanner1 = new Scanner(System.in);
-        if (player.health <= 0) {
+        if (player.getHealth() <= 0) {
             return player;
         } else if (enemy.getHealth() <= 0) {
             System.out.print(ANSI_GREEN + "Enemy Defeated!\n" + ANSI_RESET);
             return player;
         } else {
-            System.out.printf("You have %s HP. The enemy has %s HP.\n", player.health, enemy.getHealth());
-            System.out.printf("Potions: %s\n", player.potions);
+            System.out.printf("You have %s HP. The enemy has %s HP.\n", player.getHealth(), enemy.getHealth());
+            System.out.printf("Potions: %s\n", player.getPotions());
             System.out.println("Attack(A) or Drink Potion(D)? [A/D]");
             String response = scanner1.nextLine();
             if (response.equalsIgnoreCase("A")) {
-                int attackDamage = randomizer(1, 5) + player.attack/2;
+                int attackDamage = randomizer(1, 5) + player.getAttack()/2;
                 System.out.printf("\nYou deal %s damage!\n", attackDamage);
                 enemy.setHealth(enemy.getHealth() - attackDamage);
                 if (enemy.getHealth() > 0) {
                     int retaliationDamage;
                     if (enemy.boss) {
-                        retaliationDamage = randomizer(5, 15 + player.level) + player.level;
+                        retaliationDamage = randomizer(5, 15 + player.getLevel()) + player.getLevel();
                     } else {
-                        retaliationDamage = randomizer(1, 5) + (player.level * 2);
+                        retaliationDamage = randomizer(1, 5) + (player.getLevel() * 2);
                     }
-                    player.health -= retaliationDamage;
+                    player.setHealth(player.getHealth() - retaliationDamage);
                     System.out.printf("The enemy retaliates dealing %s damage!\n\n", retaliationDamage);
                 }
                 return fighter(enemy, player);
-            } else if (response.equalsIgnoreCase("D") && player.potions > 0) {
-                player.potions--;
-                player.health += 20;
+            } else if (response.equalsIgnoreCase("D") && player.getPotions() > 0) {
+                player.setPotions(player.getPotions() - 1);
+                player.setHealth(player.getHealth() + 20);
                 int retaliationDamage;
                 if (enemy.boss) {
-                    retaliationDamage = randomizer(5, 15 + player.level) + player.level;
+                    retaliationDamage = randomizer(5, 15 + player.getLevel()) + player.getLevel();
                 } else {
-                    retaliationDamage = randomizer(1, 5) + (player.level * 2);
+                    retaliationDamage = randomizer(1, 5) + (player.getLevel() * 2);
                 }
                 System.out.printf("\nYou drink a potion restoring 20 health.\nThe enemy retaliates dealing %s damage!\n\n", retaliationDamage);
-                player.health -= retaliationDamage;
+                player.setHealth(player.getHealth() - retaliationDamage);
                 return fighter(enemy, player);
-            } else if (response.equalsIgnoreCase("D") && player.potions <= 0) {
+            } else if (response.equalsIgnoreCase("D") && player.getPotions() <= 0) {
                 System.out.print(ANSI_RED + "\nNo potions available\n" + ANSI_RESET);
                 return fighter(enemy, player);
             } else if (!response.equalsIgnoreCase("D") && !response.equalsIgnoreCase("A")) {
@@ -218,12 +218,12 @@ public class ConsoleAdventureGame {
     }
 
     public static Character PotionsGoldXPKills(Character player, Enemy enemy) {
-        player.kills += 1;
+        player.setKills(player.getKills() + 1);
         String potionOut = "";
         String goldOut = "";
         int potionRoll = randomizer(1, 3);
         if (potionRoll == 2) {
-            player.potions += 1;
+            player.setPotions(player.getPotions() + 1);
             potionOut = "Potion found! ";
         } else {
             potionOut = ANSI_RED + "No potion found" + ANSI_RESET + ". ";
@@ -232,27 +232,27 @@ public class ConsoleAdventureGame {
         int goldRoll;
         if (enemy.boss) {
 //            xpRoll = randomizer(100, 125);
-            xpRoll = 150 * player.level;
-            player.totalXP += xpRoll;
-            player.xpToLevel += xpRoll;
+            xpRoll = 150 * player.getLevel();
+            player.setTotalXP(player.getTotalXP() + xpRoll);
+            player.setXpToLevel(player.getXpToLevel() + xpRoll);
             goldRoll = randomizer(35, 50);
-            player.gold += goldRoll;
+            player.setGold(player.getGold() + goldRoll);
             goldOut = ANSI_YELLOW + enemy.getName() + ANSI_RESET + " dropped " + ANSI_YELLOW + goldRoll + " gold!" + ANSI_RESET;
         } else {
             xpRoll = randomizer(50, 65);
-            player.totalXP += xpRoll;
-            player.xpToLevel += xpRoll;
+            player.setTotalXP(player.getTotalXP() + xpRoll);
+            player.setXpToLevel(player.getXpToLevel() + xpRoll);
             goldRoll = randomizer(10, 20);
-            player.gold += goldRoll;
+            player.setGold(player.getGold() + goldRoll);
             goldOut = "The enemy dropped " + ANSI_YELLOW + goldRoll + " gold" + ANSI_RESET+"!";
         }
         System.out.println("\n"+potionOut + goldOut + " Experience Gained: " + ANSI_CYAN + xpRoll + " XP" + ANSI_RESET +"!\n");
-        if (player.xpToLevel > (100 * player.level)) {
-            System.out.println(player.name + " shivers as a new found power is felt." + ANSI_BLUE + " You Level Up!\n" + ANSI_RESET);
-            player.healthMax += 10;
-            player.health = player.healthMax;
-            player.xpToLevel -= 100 * player.level;
-            player.level += 1;
+        if (player.getXpToLevel() > (100 * player.getLevel())) {
+            System.out.println(player.getName() + " shivers as a new found power is felt." + ANSI_BLUE + " You Level Up!\n" + ANSI_RESET);
+            player.setHealthMax(player.getHealthMax() + 10);
+            player.setHealth(player.getHealthMax());
+            player.setXpToLevel(player.getXpToLevel() - (100 * player.getLevel()));
+            player.setLevel(player.getLevel() + 1);
         }
         return player;
     }
@@ -385,7 +385,7 @@ public class ConsoleAdventureGame {
                 playerChoice = choice.nextLine();
                 break;
             case 4:
-                System.out.println("\nThe walls tremble as someone cries out \"" + player.name.toUpperCase() + "\"!");
+                System.out.println("\nThe walls tremble as someone cries out \"" + player.getName().toUpperCase() + "\"!");
                 System.out.println("Hurry to their aid? [y/N]");
                 playerChoice = choice.nextLine();
                 break;
@@ -427,8 +427,8 @@ public class ConsoleAdventureGame {
                 break;
         }
         if (encounter == 1) {
-            String enemy = enemyRandomizer(player.level);
-            if (player.level % 2 == 0) {
+            String enemy = enemyRandomizer(player.getLevel());
+            if (player.getLevel() % 2 == 0) {
                 System.out.println("\nYou encounter " + colorRandomizer()+enemy+ANSI_RESET+"!");
             } else {
                 System.out.println("\nYou encounter " + enemy);
@@ -447,26 +447,27 @@ public class ConsoleAdventureGame {
         switch (randomNumber) {
             case 1:
                 System.out.println("\nSurge Potion Found!\n");
-                player.surgePotions += 1;
+                player.setSurgePotions(player.getSurgePotions() + 1);
                 break;
             case 2:
                 System.out.println("\nYou found "+randomGold+" gold!\n");
+                player.setGold(player.getGold() + randomGold);
                 break;
             case 3:
                 System.out.println("\nYou continue on your quests unperturbed.\n");
                 break;
             case 4:
                 System.out.println("\nSomething quickly skitters across the ground as you feel something around you waist. The creature vanishes before you can see what it is.\n");
-                if (player.potions == 0) {
+                if (player.getPotions() == 0) {
                     System.out.println("You check your belongings, nothing seems to be missing...\n");
                 } else {
                     System.out.println("Checking your health potions you notice one has been stolen!\n");
                 }
-                player.potions -= 1;
+                player.setPotions(player.getPotions() - 1);
                 break;
             case 5:
-                System.out.println("\nYou find a Knowledge Crystal! You gained "+randomXP+" XP!\n");
-                player.xpToLevel += randomXP;
+                System.out.println("\nYou found a Knowledge Crystal! You gained "+randomXP+" XP!\n");
+                player.setXpToLevel(player.getXpToLevel() + randomXP);
                 break;
             default:
                 break;
